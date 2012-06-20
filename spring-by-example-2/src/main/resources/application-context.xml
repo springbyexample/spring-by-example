@@ -16,6 +16,7 @@
 	<tx:annotation-driven/>
 	
 	<import resource="db.xml" />
+	<import resource="jms.xml" />
 		 
 	
 </beans>

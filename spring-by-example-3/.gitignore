@@ -1,4 +1,5 @@
 target
+activemq-data
 .settings
 .classpath
 .springBeans
