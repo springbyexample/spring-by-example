@@ -18,16 +18,20 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.spring.by.example.domain.Employee;
+import com.spring.by.example.jms.ActivityLogger;
 import com.spring.by.example.service.PersistenceService;
 
 @Controller
 @RequestMapping("/employee/")
 public class EmployeeController {
 
-	private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+	//private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
 	@Resource
 	private PersistenceService<Employee, Long> employeeService;
+
+	@Resource
+	private ActivityLogger logger;
 
 	@RequestMapping(method = RequestMethod.GET, value = "list")
 	public ModelAndView listEmployees() {
