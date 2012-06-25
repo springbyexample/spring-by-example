@@ -122,7 +122,13 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!-- JMS dependencies -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.7</version>
+		</dependency>
+            
+        <!-- JMS dependencies -->
 
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
