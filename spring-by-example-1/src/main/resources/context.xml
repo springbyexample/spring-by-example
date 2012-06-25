@@ -21,12 +21,13 @@
 		p:position="${eugene.position}" p:role="${eugene.role}" p:technology="${eugene.technology}"
 		p:field="${eugene.field}" p:buddySet-ref="eugeneBuddySet" />
 
-	<util:set id="myBuddySet">
+	<util:set id="myBuddySet" set-class="java.util.HashSet" value-type="com.spring.by.example.domain.Employee">
 		<ref bean="eugene" />
 	</util:set>
 
-	<util:set id="eugeneBuddySet">
+	<util:set id="eugeneBuddySet"  set-class="java.util.HashSet" value-type="com.spring.by.example.domain.Employee">
 		<ref bean="me" />
 	</util:set>
+	
 
 </beans>

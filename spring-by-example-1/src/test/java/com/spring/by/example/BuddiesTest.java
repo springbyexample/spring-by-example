@@ -1,6 +1,5 @@
 package com.spring.by.example;
 
-
 import static com.spring.by.example.util.EmployeeUtil.whoAmIAndMyBuddies;
 
 import org.junit.Test;
@@ -14,14 +13,16 @@ import com.spring.by.example.domain.Employee;
 @ContextConfiguration("classpath*:context.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class BuddiesTest {
-	
-	@Autowired Employee me;
 
-	@Autowired Employee eugene;
+	@Autowired
+	Employee me;
+
+	@Autowired
+	Employee eugene;
 
 	@Test
 	public void outputBuddies() {
 		whoAmIAndMyBuddies(me);
-		whoAmIAndMyBuddies(eugene);		
+		whoAmIAndMyBuddies(eugene);
 	}
 }
