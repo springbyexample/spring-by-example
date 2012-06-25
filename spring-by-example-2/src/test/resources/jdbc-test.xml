@@ -10,7 +10,7 @@
 
 	<jdbc:embedded-database id="dataSource" >
 		<jdbc:script location="classpath:sql/create.sql"/>
-		<jdbc:script location="classpath:sql/init.sql"/>
+		<jdbc:script location="classpath:sql/init-jdbc.sql"/>
 	</jdbc:embedded-database>
 
 	<context:component-scan base-package="com.spring.by.example.dao.jdbc" />

@@ -37,13 +37,13 @@ public class EmployeeServiceTest {
 		Employee me = employeeService.find(1l);
 		assertTrue(me.getFirstName().equals("Oleksiy"));
 		assertTrue(me.getLastName().equals("Rezchykov"));
-		assertTrue(me.getProject().equals("Labs"));
+		assertTrue(me.getProject().equals("spring-by-example-1"));
 		assertTrue(me.getProjectMates().size() == 1);
 
 		Employee eugene = me.getProjectMates().iterator().next();
 		assertTrue(eugene.getFirstName().equals("Eugene"));
 		assertTrue(eugene.getLastName().equals("Scripnik"));
-		assertTrue(eugene.getProject().equals("Labs"));
+		assertTrue(eugene.getProject().equals("spring-by-example-1"));
 		assertTrue(eugene.getProjectMates().size() == 1);
 
 	}

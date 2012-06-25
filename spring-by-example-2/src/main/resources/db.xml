@@ -9,10 +9,6 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-	<!-- Scans within the base package of the application for @Components to 
-		configure as beans -->
-<!-- 	<tx:annotation-driven/> -->
-	
 	<jdbc:embedded-database id="dataSource" type="H2" />
 
 	<bean class="org.springframework.jdbc.datasource.init.DataSourceInitializer"
@@ -25,7 +21,7 @@
 		class="org.springframework.jdbc.datasource.init.ResourceDatabasePopulator">
 		<property name="scripts">
 			<array>
-				<value>classpath*:init.sql</value>
+				<value>classpath*:init-hibernate.sql</value>
 			</array>
 		</property>
 	</bean>

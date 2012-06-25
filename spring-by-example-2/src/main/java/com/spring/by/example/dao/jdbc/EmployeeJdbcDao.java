@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,10 +16,11 @@ import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.spring.by.example.dao.EmployeeDao;
 import com.spring.by.example.domain.Employee;
 
-@Repository
-public class EmployeeJdbcDao extends JdbcDaoSupport {
+@Repository("employeeJdbcDao")
+public class EmployeeJdbcDao extends JdbcDaoSupport implements EmployeeDao {
 
 	@Resource
 	public void initDataSource(DataSource dataSource) {
@@ -52,20 +54,35 @@ public class EmployeeJdbcDao extends JdbcDaoSupport {
 		return result;
 	}
 
-	public void save(final Employee employee) {
+	public Long save(final Employee employee) {
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection conn)
 					throws SQLException {
 				String sql = "insert into test_db.employee (firstName, lastName, project) values (?, ?, ?)";
-				PreparedStatement ps = conn.prepareStatement(sql);
+				PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, employee.getFirstName());
 				ps.setString(2, employee.getLastName());
 				ps.setString(3, employee.getProject());
+				employee.setId(getInsertedEmployeeId(ps));
 				return ps;
 			}
 		});
 		insertEmployeeMates(employee);
+		return employee.getId();
+	}
+
+	private long getInsertedEmployeeId(PreparedStatement ps) throws SQLException {
+		ResultSet generatedKeys = null;
+		try {
+			generatedKeys = ps.getGeneratedKeys();
+			generatedKeys.next();
+			return generatedKeys.getLong(1);
+		} finally {
+			if (generatedKeys != null) {
+				generatedKeys.close();
+			}
+		}
 	}
 
 	private void insertEmployeeMates(final Employee employee) {
@@ -112,10 +129,9 @@ public class EmployeeJdbcDao extends JdbcDaoSupport {
 				"delete from test_db.project_mates where employee1 = " + employeeId + " or employee2 = " + employeeId);
 	}
 
-	public void delete(Long id) {
-		deleteEmployeeMates(id);
-		getJdbcTemplate().execute(
-				"delete from test_db.employee where id = " + id);
+	public void delete(Employee employee) {
+		deleteEmployeeMates(employee.getId());
+		getJdbcTemplate().execute("delete from test_db.employee where id = " + employee.getId());
 	}
 
 }

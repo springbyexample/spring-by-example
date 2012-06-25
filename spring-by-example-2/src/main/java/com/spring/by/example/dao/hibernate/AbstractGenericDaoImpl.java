@@ -1,4 +1,4 @@
-package com.spring.by.example.dao;
+package com.spring.by.example.dao.hibernate;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 
 @Repository("dao")
 @SuppressWarnings("unchecked")

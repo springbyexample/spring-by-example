@@ -3,7 +3,7 @@ package com.spring.by.example.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spring.by.example.dao.GenericDao;
+import com.spring.by.example.dao.hibernate.GenericDao;
 import com.spring.by.example.domain.Employee;
 
 @Service("employeeService")

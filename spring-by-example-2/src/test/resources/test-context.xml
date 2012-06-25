@@ -13,11 +13,11 @@
 	<context:annotation-config />
 	<tx:annotation-driven/>
 		
-	<import resource="test-db.xml" />
+	<import resource="db.xml" />
 
 	
 	<context:component-scan base-package="com.spring.by.example.domain" />	
-	<context:component-scan base-package="com.spring.by.example.dao" />
+	<context:component-scan base-package="com.spring.by.example.dao.hibernate" />
 	<context:component-scan base-package="com.spring.by.example.service" />
 
 </beans>

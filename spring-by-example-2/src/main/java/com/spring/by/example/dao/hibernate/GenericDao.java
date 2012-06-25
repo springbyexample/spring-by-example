@@ -1,4 +1,4 @@
-package com.spring.by.example.dao;
+package com.spring.by.example.dao.hibernate;
 
 import java.io.Serializable;
 import java.util.List;
