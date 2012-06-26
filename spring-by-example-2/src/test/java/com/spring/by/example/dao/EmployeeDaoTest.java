@@ -7,15 +7,17 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.by.example.domain.Employee;
 
-@ContextConfiguration("classpath*:jdbc-test.xml")
-@Profile("test")
+@ContextConfiguration("classpath:test-context.xml")
+@ActiveProfiles(profiles = "hibernate")
 @RunWith(SpringJUnit4ClassRunner.class)
+@Transactional
 public class EmployeeDaoTest {
 
 	private static final String FIRST_PROJECT = "spring-by-example-1";

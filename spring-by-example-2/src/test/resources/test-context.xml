@@ -11,13 +11,18 @@
 		configure as beans -->		
 		
 	<context:annotation-config />
-	<tx:annotation-driven/>
-		
-	<import resource="db.xml" />
-
 	
-	<context:component-scan base-package="com.spring.by.example.domain" />	
-	<context:component-scan base-package="com.spring.by.example.dao.hibernate" />
-	<context:component-scan base-package="com.spring.by.example.service" />
+	<beans profile="hibernate">
+		<import resource="classpath:db.xml" />
+	
+		<context:component-scan base-package="com.spring.by.example.domain" />	
+		<context:component-scan base-package="com.spring.by.example.dao.hibernate" />
+		<context:component-scan base-package="com.spring.by.example.service" />
+	</beans>	
+	
+	<beans profile="jdbc">
+		<import resource="classpath:jdbc-test.xml" />
 
+		<context:component-scan base-package="com.spring.by.example.dao.jdbc" />
+	</beans>
 </beans>
