@@ -8,12 +8,9 @@ import javax.annotation.Resource;
 
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 
 @Repository("dao")
 @SuppressWarnings("unchecked")
-@Transactional
 public abstract class AbstractGenericDaoImpl<E, PK extends Serializable> implements GenericDao<E, PK> {
 	private Class<E> entityClass;
 
