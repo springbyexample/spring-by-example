@@ -10,14 +10,15 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.by.example.domain.Employee;
-import com.spring.by.example.service.PersistenceService;
 
 @ContextConfiguration("/test-context.xml")
+@ActiveProfiles("hibernate")
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class EmployeeServiceTest {

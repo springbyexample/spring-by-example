@@ -10,7 +10,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jetty.version>6.1.11</jetty.version>
 		<spring.version>3.1.1.RELEASE</spring.version>
 		<slf4j.version>1.5.10</slf4j.version>
 		<java.version>1.6</java.version>
@@ -93,7 +92,7 @@
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
@@ -127,8 +126,8 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.7</version>
 		</dependency>
-            
-        <!-- JMS dependencies -->
+
+		<!-- JMS dependencies -->
 
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
@@ -151,7 +150,7 @@
 		<dependency>
 			<groupId>org.apache.xbean</groupId>
 			<artifactId>xbean-spring</artifactId>
-			<version>3.9</version>			
+			<version>3.9</version>
 		</dependency>
 
 		<!-- Test Dependencies -->
@@ -259,14 +258,17 @@
 				</configuration>
 			</plugin>
 
+			<!-- Jetty maven plugin -->
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+			</plugin>
+
 			<!-- Tomcat plugin for embedded tomcat -->
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>tomcat-maven-plugin</artifactId>
-				<version>1.1</version>
-				<configuration>
-					<path>/${project.build.finalName}</path>
-				</configuration>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.0-beta-1</version>
 			</plugin>
 
 		</plugins>
