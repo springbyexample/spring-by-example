@@ -1,6 +1,7 @@
 package com.spring.by.example;
 
 import static com.spring.by.example.util.EmployeeUtil.whoAmIAndMyBuddies;
+import static junit.framework.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +24,13 @@ public class BuddiesTest {
 	@Test
 	public void outputBuddies() {
 		whoAmIAndMyBuddies(me);
+		assertEquals("Oleksiy", me.getFirstName());
+		assertEquals("Rezchykov", me.getLastName());
+		assertEquals(1, me.getBuddySet().size());
+		
 		whoAmIAndMyBuddies(eugene);
+		assertEquals("Eugene", eugene.getFirstName());
+		assertEquals("Scripnik", eugene.getLastName());
+		assertEquals(1, eugene.getBuddySet().size());
 	}
 }
