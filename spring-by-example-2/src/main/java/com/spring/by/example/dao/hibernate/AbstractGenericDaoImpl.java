@@ -10,7 +10,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository("dao")
-// @SuppressWarnings("unchecked")
+@SuppressWarnings("unchecked")
 public abstract class AbstractGenericDaoImpl<E, PK extends Serializable> implements GenericDao<E, PK> {
 	private Class<E> entityClass;
 
