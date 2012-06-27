@@ -19,20 +19,26 @@ public class EmployeeDSImpl implements EmployeeDS {
 
 	private Set<Employee> employees = new HashSet<Employee>();
 	
-	private @Value ("${me.firstName}") String myFirstName;
-	private @Value ("${me.lastName}") String myLastName;
-	private @Value ("${me.role}") String myRole;
-	private @Value ("${me.technology}") String myTechnology;
-	
-	private @Value ("${eugene.firstName}") String eugeneFirstName; 
-	private @Value ("${eugene.lastName}") String eugeneLastName;
-	private @Value ("${eugene.role}") String eugeneRole;
-	private @Value ("${eugene.technology}") String eugeneTechnology;
-	
+	@Value("${me.firstName}") 
+	private String myFirstName;
+	@Value("${me.lastName}")
+	private String myLastName;
+	@Value("${me.role}")
+	private String myRole;
+	@Value("${me.technology}")
+	private String myTechnology;
 
-	@SuppressWarnings("unused")
+	@Value("${eugene.firstName}")
+	private String eugeneFirstName;
+	@Value("${eugene.lastName}")
+	private String eugeneLastName;
+	@Value("${eugene.role}")
+	private String eugeneRole;
+	@Value("${eugene.technology}")
+	private String eugeneTechnology;	
+
 	@PostConstruct
-	private void buildMe() {
+	public void buildMe() {
 		Employee me = new Employee();
 		me.setFirstName(myFirstName);
 		me.setLastName(myLastName);
@@ -41,9 +47,8 @@ public class EmployeeDSImpl implements EmployeeDS {
 		employees.add(me);
 	}	
 	
-	@SuppressWarnings("unused")
 	@PostConstruct
-	private void buildEugene() {
+	public void buildEugene() {
 		Employee eugene = new Employee();		
 		eugene.setFirstName(eugeneFirstName);
 		eugene.setLastName(eugeneLastName);

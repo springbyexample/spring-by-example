@@ -19,7 +19,8 @@ import com.spring.by.example.service.AnotherEmployeeService;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class EmployeeServicesJavaConfigTest {
 
-	@Autowired AnotherEmployeeService anotherEmployeeService;
+	@Autowired 
+	private AnotherEmployeeService anotherEmployeeService;
 
 	@Test
 	public void outputWhoAmI() {

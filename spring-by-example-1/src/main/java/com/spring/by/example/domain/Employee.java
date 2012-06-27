@@ -107,6 +107,10 @@ public class Employee {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public String getFullName() {
+		return getFirstName() + " " + getLastName();
+	}
 	
 
 }

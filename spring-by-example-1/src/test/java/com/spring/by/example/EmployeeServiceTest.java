@@ -21,7 +21,8 @@ import com.spring.by.example.service.EmployeeService;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class EmployeeServiceTest {
 	
-	@Autowired EmployeeService employeeService;
+	@Autowired 
+	private EmployeeService employeeService;
 
 	@Test
 	public void outputWhoAmI() {

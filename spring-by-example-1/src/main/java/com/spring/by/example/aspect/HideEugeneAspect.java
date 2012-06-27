@@ -14,7 +14,6 @@ import com.spring.by.example.domain.Employee;
 public class HideEugeneAspect {
 	
 	private static final String EUGENE_LAST_NAME = "Scripnik";
-
 	
 	@AfterReturning(value = "execution(* com.spring.by.example.service.EmployeeService.*(..))", returning = "serviceResult")
 	public Set<Employee> hideEugene(Set<Employee> serviceResult) {

@@ -15,10 +15,10 @@ import com.spring.by.example.domain.Employee;
 public class BuddiesTest {
 
 	@Autowired
-	Employee me;
+	private Employee me;
 
 	@Autowired
-	Employee eugene;
+	private Employee eugene;
 
 	@Test
 	public void outputBuddies() {
