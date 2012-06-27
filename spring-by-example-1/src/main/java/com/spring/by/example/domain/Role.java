@@ -4,19 +4,19 @@ public enum Role {
 	
 	DEV("Developer"),TL("Team Lead"),CM("Customer Manager");
 	
-	private final String fullName;
+	private final String roleName;
 	
-	Role(String fulllName) {
-		this.fullName = fulllName;
+	Role(String roleName) {
+		this.roleName = roleName;
 	}
 	
-	public String getFullName() {
-		return fullName;
+	public String getRoleName() {
+		return roleName;
 	}
 	
 	@Override
 	public String toString() {		
-		return getFullName();
+		return getRoleName();
 	}
 
 }
