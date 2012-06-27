@@ -2,7 +2,9 @@ package com.spring.by.example.domain;
 
 public enum Role {
 	
-	DEV("Developer"),TL("Team Lead"),CM("Customer Manager");
+	DEV("Developer"),
+	TL("Team Lead"),
+	CM("Customer Manager");
 	
 	private final String roleName;
 	

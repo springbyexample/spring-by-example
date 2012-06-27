@@ -2,23 +2,25 @@ package com.spring.by.example.domain;
 
 public enum Position {	
 	
-	ASSOCIATE("Associate"), MIDLEVEL("Midlevel") , SENIOR("Senior");
+	ASSOCIATE("Associate"),
+	MIDLEVEL("Midlevel"),
+	SENIOR("Senior");
 	
 	private static final String SWE = "Software Engineer";
 	
-	private final String fullName;
+	private final String name;
 	
-	Position(String fullName) {
-		this.fullName = fullName;
+	Position(String name) {
+		this.name = name;
 	}
 	
-	public String getFullName() {
-		return fullName + " " + SWE;
+	public String getName() {
+		return name + " " + SWE;
 	}
 	
 	@Override
 	public String toString() {		
-		return getFullName();
+		return getName();
 	}
 
 }

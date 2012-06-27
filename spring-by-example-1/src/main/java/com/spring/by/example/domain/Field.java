@@ -2,21 +2,24 @@ package com.spring.by.example.domain;
 
 public enum Field {
 	
-	QA ("Quality Assurance"),WAD("Web Application Developement"),EMBEDDED ("Embedded developement"),MOBILE("Mobile Platforms Development");
+	QA("Quality Assurance"),
+	WAD("Web Application Developement"),
+	EMBEDDED("Embedded developement"),
+	MOBILE("Mobile Platforms Development");
 	
-	private final String fullName;
+	private final String name;
 	
-	Field(String fulllName) {
-		this.fullName = fulllName;
+	Field(String name) {
+		this.name = name;
 	}
 	
-	public String getFullName() {
-		return fullName;
+	public String getName() {
+		return name;
 	}
 	
 	@Override
 	public String toString() {		
-		return getFullName();
+		return getName();
 	}
 
 }
