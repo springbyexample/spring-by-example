@@ -1,8 +1,6 @@
 package com.spring.by.example;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * This test relies on new entity you need to create: Company class should contain description of some company.
@@ -12,7 +10,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * You need to define new companies as spring beans and assign them to Employee instances, you are free to choose XML Spring configuration or
  * Java Spring configuration to declare all new beans. 
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 public class CompanyTest {
 
 	@Test
