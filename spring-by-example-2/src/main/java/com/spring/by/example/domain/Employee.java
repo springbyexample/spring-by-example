@@ -14,12 +14,18 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name  = "employee")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD) 
 public class Employee {
 	
 	@Id
@@ -44,6 +50,7 @@ public class Employee {
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "project_mates", joinColumns = @JoinColumn(name = "employee1", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "employee2", referencedColumnName = "id"))	
 	@JsonIgnore
+	@XmlTransient
 	private Set<Employee> projectMates;
 
 	

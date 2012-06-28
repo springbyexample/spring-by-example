@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.spring.by.example.domain.Employee;
-import com.spring.by.example.jms.ActivityLogger;
 import com.spring.by.example.service.PersistenceService;
 
 @Controller
@@ -122,10 +121,18 @@ public class EmployeeController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "json/view/{id}.json")
+	@RequestMapping(method = RequestMethod.GET, value = "rest/view/{id}.json", produces = "application/json")
 	@ResponseBody
 	public Employee viewJson(@PathVariable Long id) {
 		logger.debug("Received request to view JSON");
+		Employee employee = employeeService.find(id);
+		return employee;
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "rest/view/{id}.xml", produces = "application/xml")
+	@ResponseBody
+	public Employee viewXml(@PathVariable Long id) {
+		logger.debug("Received request to view XML");
 		Employee employee = employeeService.find(id);
 		return employee;
 	}
