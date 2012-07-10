@@ -19,7 +19,7 @@
 		<property name="connectionFactory" ref="jmsFactory" />
 	</bean>
 
-    <amq:queue id="queue" physicalName="com.spring.by.example" />
+    <amq:queue id="queue" physicalName="ua.com.springbyexample" />
 	
     <bean id="acdnProducerTemplate" class="org.springframework.jms.core.JmsTemplate"
         p:connectionFactory-ref="pooledJmsConnectionFactory"

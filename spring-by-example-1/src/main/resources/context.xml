@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:c="http://www.springframework.org/schema/c"
-	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
 	<bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations" value="classpath*:employee.properties" />
-	</bean>
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		p:locations="classpath*:employee.properties"/>
+	
+	<bean name="me" class="ua.com.springbyexample.domain.Employee"
+		p:firstName="${me.firstName}" p:lastName="${me.lastName}" p:position="${me.position}"
+		p:role="${me.role}" p:technology="${me.technology}" p:field="${me.field}"
+		p:buddySet-ref="myBuddySet" />
 
-	<bean name="me" class="com.spring.by.example.domain.Employee" p:firstName="${me.firstName}"
-		p:lastName="${me.lastName}" p:position="${me.position}" p:role="${me.role}"
-		p:technology="${me.technology}" p:field="${me.field}" p:buddySet-ref="myBuddySet" />
-
-	<bean name="eugene" class="com.spring.by.example.domain.Employee"
+	<bean name="eugene" class="ua.com.springbyexample.domain.Employee"
 		p:firstName="${eugene.firstName}" p:lastName="${eugene.lastName}"
 		p:position="${eugene.position}" p:role="${eugene.role}" p:technology="${eugene.technology}"
 		p:field="${eugene.field}" p:buddySet-ref="eugeneBuddySet" />
 
-	<util:set id="myBuddySet" set-class="java.util.HashSet" value-type="com.spring.by.example.domain.Employee">
+	<util:set id="myBuddySet" set-class="java.util.HashSet"
+		value-type="ua.com.springbyexample.domain.Employee">
 		<ref bean="eugene" />
 	</util:set>
 
-	<util:set id="eugeneBuddySet"  set-class="java.util.HashSet" value-type="com.spring.by.example.domain.Employee">
+	<util:set id="eugeneBuddySet" set-class="java.util.HashSet"
+		value-type="ua.com.springbyexample.domain.Employee">
 		<ref bean="me" />
 	</util:set>
-	
+
 
 </beans>

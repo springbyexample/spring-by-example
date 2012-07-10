@@ -15,14 +15,14 @@
 	<beans profile="hibernate">
 		<import resource="classpath:db.xml" />
 	
-		<context:component-scan base-package="com.spring.by.example.domain" />	
-		<context:component-scan base-package="com.spring.by.example.dao.hibernate" />
-		<context:component-scan base-package="com.spring.by.example.service" />
+		<context:component-scan base-package="ua.com.springbyexample.domain" />	
+		<context:component-scan base-package="ua.com.springbyexample.dao.hibernate" />
+		<context:component-scan base-package="ua.com.springbyexample.service" />
 	</beans>	
 	
 	<beans profile="jdbc">
 		<import resource="classpath:jdbc-test.xml" />
 
-		<context:component-scan base-package="com.spring.by.example.dao.jdbc" />
+		<context:component-scan base-package="ua.com.springbyexample.dao.jdbc" />
 	</beans>
 </beans>

@@ -10,11 +10,14 @@
 		
 		<context:annotation-config />
 		
-		<context:component-scan base-package="com.spring.by.example.service" />
-		<context:component-scan base-package="com.spring.by.example.ds" />
-		<context:property-placeholder location="classpath*:employee.properties" ignore-unresolvable="true" />
+		<context:component-scan base-package="ua.com.springbyexample.service" />
+		<context:component-scan base-package="ua.com.springbyexample.ds" />
+		
+		<context:property-placeholder 
+			location="classpath*:employee.properties" 
+			ignore-unresolvable="true" />
 		
  		<!-- aop:aspectj-autoproxy />		
-		<context:component-scan base-package="com.spring.by.example.aspect" /-->
+		<context:component-scan base-package="ua.com.springbyexample.aspect" /-->
 
 </beans>

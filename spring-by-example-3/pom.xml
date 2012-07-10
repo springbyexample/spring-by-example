@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.spring.by.example</groupId>
+	<groupId>ua.com.springbyexample</groupId>
 	<artifactId>spring-by-example-3</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -12,9 +12,10 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>3.1.1.RELEASE</spring.version>
+		<spring.version>3.1.2.RELEASE</spring.version>
 		<java.version>1.6</java.version>
 		<sl4j.version>1.6.6</sl4j.version>
+		<logback.version>1.0.6</logback.version>
 		<activemq.version>5.6.0</activemq.version>
 	</properties>
 
@@ -104,15 +105,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${sl4j.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 

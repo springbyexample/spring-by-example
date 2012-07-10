@@ -35,7 +35,7 @@
 	</bean>
 
 	<util:list id="annotatedPersistenceClasses">
-		<value>com.spring.by.example.domain.Employee</value>
+		<value>ua.com.springbyexample.domain.Employee</value>
 	</util:list>
 
 	<util:properties id="hibernateProperties" location="classpath:hibernate.properties" />

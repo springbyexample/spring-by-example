@@ -15,7 +15,7 @@
 
 	<jms:listener-container container-type="default"
 		connection-factory="pooledJmsConnectionFactory" acknowledge="auto">
-		<jms:listener destination="com.spring.by.example" ref="simpleLoggerListener" />
+		<jms:listener destination="ua.com.springbyexample" ref="simpleLoggerListener" />
 	</jms:listener-container>
 
 </beans>
