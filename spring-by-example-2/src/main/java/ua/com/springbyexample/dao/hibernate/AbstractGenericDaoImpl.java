@@ -9,6 +9,8 @@ import javax.annotation.Resource;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
+import ua.com.springbyexample.dao.GenericDao;
+
 @Repository("dao")
 @SuppressWarnings("unchecked")
 public abstract class AbstractGenericDaoImpl<E, PK extends Serializable> implements GenericDao<E, PK> {
@@ -26,17 +28,16 @@ public abstract class AbstractGenericDaoImpl<E, PK extends Serializable> impleme
 
 	@Override
 	public void update(E entity) {
-		sessionFactory.getCurrentSession().update(entity);
+		sessionFactory.getCurrentSession().saveOrUpdate(entity);
 	}
 
-	@Override
 	public E merge(E entity) {
 		return (E) sessionFactory.getCurrentSession().merge(entity);
 	}
 
 	@Override
-	public PK save(E entity) {
-		return (PK) sessionFactory.getCurrentSession().save(entity);
+	public void save(E entity) {
+		sessionFactory.getCurrentSession().save(entity);
 	}
 
 	@Override
@@ -54,7 +55,6 @@ public abstract class AbstractGenericDaoImpl<E, PK extends Serializable> impleme
 		return sessionFactory.getCurrentSession().createQuery("from " + getEntityClass().getName()).list();
 	}
 
-	@Override
 	public void saveOrUpdate(E entity) {
 		sessionFactory.getCurrentSession().saveOrUpdate(entity);
 	}

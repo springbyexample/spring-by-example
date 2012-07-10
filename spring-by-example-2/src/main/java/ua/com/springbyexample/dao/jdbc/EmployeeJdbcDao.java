@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -19,7 +21,6 @@ import org.springframework.stereotype.Repository;
 import ua.com.springbyexample.dao.EmployeeDao;
 import ua.com.springbyexample.domain.Employee;
 
-
 @Repository("employeeJdbcDao")
 public class EmployeeJdbcDao extends JdbcDaoSupport implements EmployeeDao {
 
@@ -28,20 +29,22 @@ public class EmployeeJdbcDao extends JdbcDaoSupport implements EmployeeDao {
 		setDataSource(dataSource);
 	}
 
+	@Override
 	public Employee find(Long id) {
 		final Employee result = new Employee();
-		getJdbcTemplate().query("select * from test_db.employee where id = ?",
-				new Object[] { id }, new RowCallbackHandler() {
-					public void processRow(ResultSet rs) throws SQLException {
-						result.setId(Long.valueOf(rs.getString("id")));
-						result.setFirstName(rs.getString("firstName"));
-						result.setLastName(rs.getString("lastName"));
-						result.setProject(rs.getString("project"));
-					}
-				});
+		getJdbcTemplate().query("select * from test_db.employee where id = ?", new Object[] { id }, new RowCallbackHandler() {
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				result.setId(Long.valueOf(rs.getString("id")));
+				result.setFirstName(rs.getString("firstName"));
+				result.setLastName(rs.getString("lastName"));
+				result.setProject(rs.getString("project"));
+			}
+		});
 		final Set<Employee> matesSet = new HashSet<Employee>();
 		getJdbcTemplate().query("select e.* from test_db.project_mates as pm inner join test_db.employee as e on (pm.employee2 = e.id) where pm.employee1 = ?",
 				new Object[] { id }, new RowCallbackHandler() {
+					@Override
 					public void processRow(ResultSet rs) throws SQLException {
 						Employee mate = new Employee();
 						mate.setId(Long.valueOf(rs.getString("id")));
@@ -55,11 +58,11 @@ public class EmployeeJdbcDao extends JdbcDaoSupport implements EmployeeDao {
 		return result;
 	}
 
-	public Long save(final Employee employee) {
+	@Override
+	public void save(final Employee employee) {
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			@Override
-			public PreparedStatement createPreparedStatement(Connection conn)
-					throws SQLException {
+			public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
 				String sql = "insert into test_db.employee (firstName, lastName, project) values (?, ?, ?)";
 				PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, employee.getFirstName());
@@ -70,7 +73,7 @@ public class EmployeeJdbcDao extends JdbcDaoSupport implements EmployeeDao {
 			}
 		});
 		insertEmployeeMates(employee);
-		return employee.getId();
+
 	}
 
 	private long getInsertedEmployeeId(PreparedStatement ps) throws SQLException {
@@ -96,8 +99,7 @@ public class EmployeeJdbcDao extends JdbcDaoSupport implements EmployeeDao {
 	private void insertMatePair(final Employee mate1, final Employee mate2) {
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			@Override
-			public PreparedStatement createPreparedStatement(Connection conn)
-					throws SQLException {
+			public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
 				String sql = "insert into test_db.project_mates (employee1, employee2) values (?, ?)";
 				PreparedStatement ps = conn.prepareStatement(sql);
 				ps.setString(1, mate1.getId().toString());
@@ -107,11 +109,11 @@ public class EmployeeJdbcDao extends JdbcDaoSupport implements EmployeeDao {
 		});
 	}
 
+	@Override
 	public void update(final Employee employee) {
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			@Override
-			public PreparedStatement createPreparedStatement(Connection conn)
-					throws SQLException {
+			public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
 				String sql = "update test_db.employee set firstName = ?, lastName = ?, project = ? where id = ?";
 				PreparedStatement ps = conn.prepareStatement(sql);
 				ps.setString(1, employee.getFirstName());
@@ -126,13 +128,19 @@ public class EmployeeJdbcDao extends JdbcDaoSupport implements EmployeeDao {
 	}
 
 	private void deleteEmployeeMates(Long employeeId) {
-		getJdbcTemplate().execute(
-				"delete from test_db.project_mates where employee1 = " + employeeId + " or employee2 = " + employeeId);
+		getJdbcTemplate().execute("delete from test_db.project_mates where employee1 = " + employeeId + " or employee2 = " + employeeId);
 	}
 
+	@Override
 	public void delete(Employee employee) {
 		deleteEmployeeMates(employee.getId());
 		getJdbcTemplate().execute("delete from test_db.employee where id = " + employee.getId());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Employee> find() {
+		return Collections.EMPTY_LIST;
 	}
 
 }

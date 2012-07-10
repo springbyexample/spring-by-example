@@ -12,12 +12,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import ua.com.springbyexample.dao.EmployeeDao;
 import ua.com.springbyexample.domain.Employee;
 
-
 @ContextConfiguration("classpath:test-context.xml")
-@ActiveProfiles(profiles = "hibernate")
+@ActiveProfiles(profiles = "jpa")
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class EmployeeDaoTest {

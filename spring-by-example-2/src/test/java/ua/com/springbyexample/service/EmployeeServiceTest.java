@@ -16,11 +16,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.com.springbyexample.domain.Employee;
-import ua.com.springbyexample.service.PersistenceService;
-
 
 @ContextConfiguration("/test-context.xml")
-@ActiveProfiles("hibernate")
+@ActiveProfiles("jpa")
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class EmployeeServiceTest {
@@ -58,8 +56,8 @@ public class EmployeeServiceTest {
 		employee.setLastName("some last name");
 		employee.setProject("some project");
 
-		Long id = employeeService.save(employee);
-		Employee savedEmployee = employeeService.find(id);
+		employeeService.save(employee);
+		Employee savedEmployee = employeeService.find(employee.getId());
 		assertTrue(savedEmployee.getFirstName().equals(employee.getFirstName()));
 		assertTrue(savedEmployee.getLastName().equals(employee.getLastName()));
 

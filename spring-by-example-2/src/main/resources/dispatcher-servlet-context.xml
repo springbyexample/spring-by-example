@@ -17,7 +17,10 @@
 	
 	<context:annotation-config />	
 	
-	<context:component-scan base-package="ua.com.springbyexample" />
+	<context:component-scan base-package="ua.com.springbyexample">
+		<context:exclude-filter type="assignable" expression="ua.com.springbyexample.dao.jdbc.EmployeeJdbcDao"/>
+		<context:exclude-filter type="assignable" expression="ua.com.springbyexample.dao.jpa.EmployeeJpaDao"/>
+	</context:component-scan>
 	
 	<tx:annotation-driven/>
 

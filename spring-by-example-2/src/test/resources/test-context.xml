@@ -12,17 +12,26 @@
 		
 	<context:annotation-config />
 	
+	<context:component-scan base-package="ua.com.springbyexample.service" />
+	
 	<beans profile="hibernate">
 		<import resource="classpath:db.xml" />
 	
 		<context:component-scan base-package="ua.com.springbyexample.domain" />	
 		<context:component-scan base-package="ua.com.springbyexample.dao.hibernate" />
-		<context:component-scan base-package="ua.com.springbyexample.service" />
+		
 	</beans>	
 	
 	<beans profile="jdbc">
 		<import resource="classpath:jdbc-test.xml" />
 
 		<context:component-scan base-package="ua.com.springbyexample.dao.jdbc" />
+	</beans>
+	
+	<beans profile="jpa">
+		<import resource="classpath:jpa-test.xml"/>
+		
+		<context:component-scan base-package="ua.com.springbyexample.domain" />
+		<context:component-scan base-package="ua.com.springbyexample.dao.jpa" />
 	</beans>
 </beans>

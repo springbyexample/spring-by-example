@@ -97,7 +97,11 @@ public class EmployeeController {
 		if (bindingResult.hasErrors()) {
 			return "edit";
 		} else {
-			employeeService.saveOrUpdate(employee);
+			if (employee.getId() != null) {
+				employeeService.update(employee);
+			} else {
+				employeeService.save(employee);
+			}
 			return "redirect:list";
 		}
 

@@ -6,10 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ua.com.springbyexample.dao.hibernate.GenericDao;
-
-
-
+import ua.com.springbyexample.dao.GenericDao;
 
 @Service
 public abstract class AbtractPersistenceService<E, PK extends Serializable> implements PersistenceService<E, PK> {
@@ -22,8 +19,8 @@ public abstract class AbtractPersistenceService<E, PK extends Serializable> impl
 
 	@Override
 	@Transactional
-	public PK save(E entity) {
-		return getDomainDAO().save(entity);
+	public void save(E entity) {
+		getDomainDAO().save(entity);
 	}
 
 	@Override
@@ -36,18 +33,12 @@ public abstract class AbtractPersistenceService<E, PK extends Serializable> impl
 	@Transactional(readOnly = true)
 	public E find(PK id) {
 		return getDomainDAO().find(id);
-	}	
+	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<E> find() {
 		return getDomainDAO().find();
-	}
-
-	@Override
-	@Transactional
-	public void saveOrUpdate(E entity) {
-		getDomainDAO().saveOrUpdate(entity);
 	}
 
 	protected abstract GenericDao<E, PK> getDomainDAO();
