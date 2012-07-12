@@ -1,7 +1,7 @@
 package ua.com.springbyexample;
 
-
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 import static ua.com.springbyexample.util.EmployeeUtil.whoAmI;
 
 import java.util.Set;
@@ -17,18 +17,17 @@ import ua.com.springbyexample.domain.Role;
 import ua.com.springbyexample.domain.Technology;
 import ua.com.springbyexample.service.EmployeeService;
 
-
 @ContextConfiguration("classpath*:annotationContext.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class EmployeeServiceTest {
-	
-	@Autowired 
+
+	@Autowired
 	private EmployeeService employeeService;
 
 	@Test
 	public void outputWhoAmI() {
 		Set<Employee> candidates = employeeService.getEmployeeListByRoleAndTechology(Role.DEV, Technology.JAVA);
-		assertEquals(1, candidates.size());
+		assertThat(candidates.size(), is(1));
 
 		for (Employee employee : candidates) {
 			whoAmI(employee);

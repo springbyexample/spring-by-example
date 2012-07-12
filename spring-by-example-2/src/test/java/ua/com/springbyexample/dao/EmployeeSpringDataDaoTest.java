@@ -1,7 +1,8 @@
 package ua.com.springbyexample.dao;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,27 +30,27 @@ public class EmployeeSpringDataDaoTest {
 	@Test
 	public void testDaoUseCases() {
 
-		Employee me = repository.find(Long.valueOf(1l));
+		Employee me = repository.find(1l);
 
-		Employee eugene = repository.find(Long.valueOf(2l));
+		Employee eugene = repository.find(2l);
 
-		assertTrue(me.getFirstName().equals("Oleksiy"));
-		assertTrue(me.getLastName().equals("Rezchykov"));
+		assertThat(me.getFirstName(), equalTo("Oleksiy"));
+		assertThat(me.getLastName(), equalTo("Rezchykov"));
 
-		assertTrue(eugene.getFirstName().equals("Eugene"));
-		assertTrue(eugene.getLastName().equals("Scripnik"));
+		assertThat(eugene.getFirstName(), equalTo("Eugene"));
+		assertThat(eugene.getLastName(), equalTo("Scripnik"));
 
-		assertEquals(FIRST_PROJECT, me.getProject());
+		assertThat(me.getProject(), is(FIRST_PROJECT));
 
-		assertEquals(1, me.getProjectMates().size());
+		assertThat(me.getProjectMates().size(), is(1));
 
 		// change current project
 		me.setProject(SECOND_PROJECT);
 		repository.update(me);
 
-		Employee anotherInstanceOfMe = repository.find(Long.valueOf(1l));
+		Employee anotherInstanceOfMe = repository.find(1l);
 
-		assertEquals(SECOND_PROJECT, anotherInstanceOfMe.getProject());
+		assertThat(anotherInstanceOfMe.getProject(), equalTo(SECOND_PROJECT));
 	}
 
 }

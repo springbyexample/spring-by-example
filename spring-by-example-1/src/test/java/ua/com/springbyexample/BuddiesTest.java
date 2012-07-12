@@ -1,6 +1,8 @@
 package ua.com.springbyexample;
 
-import static junit.framework.Assert.assertEquals;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 import static ua.com.springbyexample.util.EmployeeUtil.whoAmIAndMyBuddies;
 
 import org.junit.Test;
@@ -10,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ua.com.springbyexample.domain.Employee;
-
 
 @ContextConfiguration("classpath*:context.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,13 +26,13 @@ public class BuddiesTest {
 	@Test
 	public void outputBuddies() {
 		whoAmIAndMyBuddies(me);
-		assertEquals("Oleksiy", me.getFirstName());
-		assertEquals("Rezchykov", me.getLastName());
-		assertEquals(1, me.getBuddySet().size());
-		
+		assertThat(me.getFirstName(), equalTo("Oleksiy"));
+		assertThat(me.getLastName(), equalTo("Rezchykov"));
+		assertThat(me.getBuddySet().size(), is(1));
+
 		whoAmIAndMyBuddies(eugene);
-		assertEquals("Eugene", eugene.getFirstName());
-		assertEquals("Scripnik", eugene.getLastName());
-		assertEquals(1, eugene.getBuddySet().size());
+		assertThat(eugene.getFirstName(), equalTo("Eugene"));
+		assertThat(eugene.getLastName(), equalTo("Scripnik"));
+		assertThat(eugene.getBuddySet().size(), is(1));
 	}
 }

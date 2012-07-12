@@ -1,8 +1,9 @@
 package ua.com.springbyexample.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
@@ -29,23 +30,23 @@ public class EmployeeServiceTest {
 	@Test
 	public void testListAllEmployees() {
 		List<Employee> employees = employeeService.find();
-		assertEquals(2, employees.size());
+		assertThat(employees.size(), is(2));
 	}
 
 	@Test
 	public void testFindEmployee() {
 
 		Employee me = employeeService.find(1l);
-		assertTrue(me.getFirstName().equals("Oleksiy"));
-		assertTrue(me.getLastName().equals("Rezchykov"));
-		assertTrue(me.getProject().equals("spring-by-example-1"));
-		assertTrue(me.getProjectMates().size() == 1);
+		assertThat(me.getFirstName(), equalTo("Oleksiy"));
+		assertThat(me.getLastName(), equalTo("Rezchykov"));
+		assertThat(me.getProject(), equalTo("spring-by-example-1"));
+		assertThat(me.getProjectMates().size(), is(1));
 
 		Employee eugene = me.getProjectMates().iterator().next();
-		assertTrue(eugene.getFirstName().equals("Eugene"));
-		assertTrue(eugene.getLastName().equals("Scripnik"));
-		assertTrue(eugene.getProject().equals("spring-by-example-1"));
-		assertTrue(eugene.getProjectMates().size() == 1);
+		assertThat(eugene.getFirstName(), equalTo("Eugene"));
+		assertThat(eugene.getLastName(), equalTo("Scripnik"));
+		assertThat(eugene.getProject(), equalTo("spring-by-example-1"));
+		assertThat(eugene.getProjectMates().size(), is(1));
 
 	}
 
@@ -58,8 +59,8 @@ public class EmployeeServiceTest {
 
 		employeeService.save(employee);
 		Employee savedEmployee = employeeService.find(employee.getId());
-		assertTrue(savedEmployee.getFirstName().equals(employee.getFirstName()));
-		assertTrue(savedEmployee.getLastName().equals(employee.getLastName()));
+		assertThat(savedEmployee.getFirstName(), equalTo(employee.getFirstName()));
+		assertThat(savedEmployee.getLastName(), equalTo(employee.getLastName()));
 
 	}
 
@@ -70,8 +71,8 @@ public class EmployeeServiceTest {
 		me.setLastName("Rezchikov");
 		employeeService.update(me);
 		Employee anotherInstanceofMe = employeeService.find(1l);
-		assertTrue(me.getFirstName().equals(anotherInstanceofMe.getFirstName()));
-		assertTrue(me.getLastName().equals(anotherInstanceofMe.getLastName()));
+		assertThat(me.getFirstName(), equalTo(anotherInstanceofMe.getFirstName()));
+		assertThat(me.getLastName(), equalTo(anotherInstanceofMe.getLastName()));
 	}
 
 	@Test
@@ -79,7 +80,7 @@ public class EmployeeServiceTest {
 		Employee me = employeeService.find(1l);
 		employeeService.delete(me);
 		Employee anotherInstanceOfMe = employeeService.find(1l);
-		assertNull(anotherInstanceOfMe);
+		assertThat(anotherInstanceOfMe, nullValue());
 
 	}
 
