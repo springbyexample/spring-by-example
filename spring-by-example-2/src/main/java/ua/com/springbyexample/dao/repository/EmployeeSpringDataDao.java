@@ -8,4 +8,6 @@ import ua.com.springbyexample.domain.Employee;
 @Transactional(readOnly = true)
 public interface EmployeeSpringDataDao extends JpaRepository<Employee, Long> {
 
+	Employee findByFirstName(String firstName);
+
 }

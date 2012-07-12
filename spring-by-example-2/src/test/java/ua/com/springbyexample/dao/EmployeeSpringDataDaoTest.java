@@ -53,4 +53,11 @@ public class EmployeeSpringDataDaoTest {
 		assertThat(anotherInstanceOfMe.getProject(), equalTo(SECOND_PROJECT));
 	}
 
+	@Test
+	public void testQueryMethod() {
+		Employee me = repository.findByFirstName("Oleksiy");
+		assertThat(me.getFirstName(), equalTo("Oleksiy"));
+		assertThat(me.getLastName(), equalTo("Rezchykov"));
+	}
+
 }

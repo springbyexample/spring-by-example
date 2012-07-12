@@ -22,4 +22,8 @@ public class EmployeeSpringDataService {
 		repository.saveAndFlush(employee);
 	}
 
+	public Employee findByFirstName(String firstName) {
+		return repository.findByFirstName(firstName);
+	}
+
 }
