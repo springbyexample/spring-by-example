@@ -1,34 +1,24 @@
 package ua.com.springbyexample.controller;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter;
 
+@RunWith(MockitoJUnitRunner.class)
 public class EmployeeControllerTest {
 
-	private MockHttpServletRequest request;
-	private MockHttpServletResponse response;
+	private final MockHttpServletRequest request = new MockHttpServletRequest();
+	private final MockHttpServletResponse response = new MockHttpServletResponse();
+	private final AnnotationMethodHandlerAdapter adapter = new AnnotationMethodHandlerAdapter();
 
 	@Mock
 	private EmployeeController controller;
-	private AnnotationMethodHandlerAdapter adapter;
-
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
-		request = new MockHttpServletRequest();
-		response = new MockHttpServletResponse();
-
-		adapter = new AnnotationMethodHandlerAdapter();
-
-	}
 
 	@Test
 	public void testMappings() throws Exception {
