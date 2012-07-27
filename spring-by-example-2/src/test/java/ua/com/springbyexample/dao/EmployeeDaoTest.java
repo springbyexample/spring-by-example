@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.springbyexample.domain.Employee;
 
 @ContextConfiguration("classpath:test-context.xml")
-@ActiveProfiles(profiles = "jpa")
+@ActiveProfiles(profiles = "hibernate")
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class EmployeeDaoTest {

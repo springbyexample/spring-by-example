@@ -89,6 +89,13 @@
 
 		<dependency>
 			<groupId>org.springframework</groupId>
+			<artifactId>spring-test-mvc</artifactId>
+			<version>1.0.0.BUILD-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
 			<version>${spring.version}</version>
 			<type>jar</type>
@@ -220,11 +227,20 @@
 		</repository>
 
 		<repository>
-			<id>org.springframework.maven.milestone</id>
+			<id>org.springframework.maven.release</id>
 			<name>Spring Maven Milestone Repository</name>
 			<url>http://repo.springsource.org/release</url>
 			<snapshots>
 				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	
+	<repository>
+			<id>org.springframework.maven.libs</id>
+			<name>Spring Libs Maven Repository</name>
+			<url>http://repo.springsource.org/libs-snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
 			</snapshots>
 		</repository>
 	</repositories>

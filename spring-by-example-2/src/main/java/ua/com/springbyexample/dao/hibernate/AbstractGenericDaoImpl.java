@@ -7,18 +7,16 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.hibernate.SessionFactory;
-import org.springframework.stereotype.Repository;
 
 import ua.com.springbyexample.dao.GenericDao;
 
-@Repository("dao")
-@SuppressWarnings("unchecked")
 public abstract class AbstractGenericDaoImpl<E, PK extends Serializable> implements GenericDao<E, PK> {
 	private Class<E> entityClass;
 
 	@Resource(name = "sessionFactory")
 	private SessionFactory sessionFactory;
 
+	@SuppressWarnings("unchecked")
 	protected Class<E> getEntityClass() {
 		if (entityClass == null) {
 			entityClass = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -31,6 +29,7 @@ public abstract class AbstractGenericDaoImpl<E, PK extends Serializable> impleme
 		sessionFactory.getCurrentSession().saveOrUpdate(entity);
 	}
 
+	@SuppressWarnings("unchecked")
 	public E merge(E entity) {
 		return (E) sessionFactory.getCurrentSession().merge(entity);
 	}
@@ -45,11 +44,13 @@ public abstract class AbstractGenericDaoImpl<E, PK extends Serializable> impleme
 		sessionFactory.getCurrentSession().delete(entity);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public E find(PK id) {
 		return (E) sessionFactory.getCurrentSession().get(getEntityClass(), id);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<E> find() {
 		return sessionFactory.getCurrentSession().createQuery("from " + getEntityClass().getName()).list();

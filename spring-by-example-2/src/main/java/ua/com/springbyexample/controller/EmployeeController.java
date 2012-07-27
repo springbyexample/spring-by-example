@@ -30,6 +30,10 @@ public class EmployeeController {
 	@Resource
 	private PersistenceService<Employee, Long> employeeService;
 
+	public void setEmployeeService(PersistenceService<Employee, Long> employeeService) {
+		this.employeeService = employeeService;
+	}
+
 	/*
 	 * Commented for JMS example Works ONLY with spring-by-example-3 where
 	 * message broker is started in embedded mode
