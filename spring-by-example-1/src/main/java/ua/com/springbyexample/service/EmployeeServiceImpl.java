@@ -19,7 +19,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeDS employeeDS;
 
 	@Override
-	public Set<Employee> getEmployeeListByRoleAndTechology(Role role, Technology technology) {
+	public Set<Employee> getEmployeeListByRoleAndTechnology(Role role, Technology technology) {
 		Set<Employee> result = new HashSet<Employee>();
 		for (Employee employee : employeeDS.getEmployees()) {
 			if (employee.getRole() == role && employee.getTechnology() == technology) {

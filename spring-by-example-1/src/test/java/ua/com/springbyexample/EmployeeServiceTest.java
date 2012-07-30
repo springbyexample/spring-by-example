@@ -26,7 +26,7 @@ public class EmployeeServiceTest {
 
 	@Test
 	public void outputWhoAmI() {
-		Set<Employee> candidates = employeeService.getEmployeeListByRoleAndTechology(Role.DEV, Technology.JAVA);
+		Set<Employee> candidates = employeeService.getEmployeeListByRoleAndTechnology(Role.DEV, Technology.JAVA);
 		assertThat(candidates.size(), is(1));
 
 		for (Employee employee : candidates) {
