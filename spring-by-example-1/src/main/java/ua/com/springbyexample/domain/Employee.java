@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 public class Employee {
 	
 	private Long id;
-
 	private String lastName;
 	private String firstName;
 	private Position position;	
@@ -18,18 +17,17 @@ public class Employee {
 	private Field field;
 	private Technology technology;
 
-	@SuppressWarnings(value= "unchecked")
-	private Set<Employee> buddySet = Collections.EMPTY_SET;
+	private Set<Employee> buddySet = new HashSet<Employee>();
 
 	public Employee() {
 
 	}
 
-	public Employee(String lastName, String firstName, Position potision,
+	public Employee(String lastName, String firstName, Position position,
 			Role role, Field field, Technology technology) {
 		this.lastName = lastName;
 		this.firstName = firstName;
-		this.position = potision;
+		this.position = position;
 		this.role = role;
 		this.field = field;
 		this.technology = technology;
@@ -50,6 +48,7 @@ public class Employee {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
 	public Position getPosition() {
 		return position;
 	}
@@ -73,6 +72,7 @@ public class Employee {
 	public void setField(Field field) {
 		this.field = field;
 	}
+
 	public Technology getTechnology() {
 		return technology;
 	}
@@ -84,19 +84,16 @@ public class Employee {
 	public Set<Employee> getBuddySet() {
 		return Collections.unmodifiableSet(buddySet);
 	}
+
 	public void setBuddySet(Set<Employee> buddySet) {
-		this.buddySet = buddySet;
+		this.buddySet = new HashSet<Employee>(buddySet);
 	}
+
 	public boolean addBuddy(Employee buddy) {
-		if (buddySet.equals(Collections.EMPTY_SET)) {
-			buddySet = new HashSet<Employee>();
-		}
 		return buddySet.add(buddy);
 	}
+
 	public boolean removeBuddy(Employee buddy) {
-		if (buddySet.equals(Collections.EMPTY_SET)) {
-			return false;
-		}
 		return buddySet.remove(buddy);
 	}
 
@@ -111,6 +108,5 @@ public class Employee {
 	public String getFullName() {
 		return getFirstName() + " " + getLastName();
 	}
-	
 
 }
