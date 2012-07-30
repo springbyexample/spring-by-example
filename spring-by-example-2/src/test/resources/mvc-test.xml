@@ -9,10 +9,8 @@
 	<context:annotation-config />
 	<mvc:annotation-driven />
 
-	<context:component-scan base-package="ua.com.springbyexample.controller">
+	<context:component-scan base-package="ua.com.springbyexample.controller" />
 
-	</context:component-scan>
-	
 	<bean name="employeeService" class="org.mockito.Mockito" factory-method="mock" >
 		<constructor-arg value="ua.com.springbyexample.service.PersistenceService"/>
 	</bean>
