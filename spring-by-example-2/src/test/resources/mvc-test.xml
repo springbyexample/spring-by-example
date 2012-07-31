@@ -15,8 +15,6 @@
 		<constructor-arg value="ua.com.springbyexample.service.PersistenceService"/>
 	</bean>
 	
-	<bean name="mockito" class="org.mockito.Mockito" />
-
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />

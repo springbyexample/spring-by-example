@@ -6,9 +6,8 @@ import ua.com.springbyexample.domain.Employee;
 import ua.com.springbyexample.domain.Role;
 import ua.com.springbyexample.domain.Technology;
 
-
 public interface EmployeeService {
-	
-	Set<Employee> getEmployeeListByRoleAndTechology(Role role, Technology technology);
+
+	Set<Employee> getEmployeeListByRoleAndTechnology(Role role, Technology technology);
 
 }
