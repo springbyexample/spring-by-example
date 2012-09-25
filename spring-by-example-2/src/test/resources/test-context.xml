@@ -13,6 +13,7 @@
     <tx:annotation-driven/>
 		
 	<context:annotation-config />
+	<tx:annotation-driven/>
 	
 	<context:component-scan base-package="ua.com.springbyexample.service" />
 	
