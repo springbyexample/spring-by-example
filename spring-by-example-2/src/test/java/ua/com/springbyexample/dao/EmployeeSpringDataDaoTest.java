@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,8 @@ public class EmployeeSpringDataDaoTest {
 	@Autowired
 	private EmployeeSpringDataService repository;
 
-	@Test
+    @Ignore
+    @Test
 	public void testDaoUseCases() {
 
 		Employee me = repository.find(1l);
@@ -53,6 +55,7 @@ public class EmployeeSpringDataDaoTest {
 		assertThat(anotherInstanceOfMe.getProject(), equalTo(SECOND_PROJECT));
 	}
 
+    @Ignore
 	@Test
 	public void testQueryMethod() {
 		Employee me = repository.findByFirstName("Oleksiy");
