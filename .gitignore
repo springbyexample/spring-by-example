@@ -1,2 +1,9 @@
 .metadata/
 Servers/
+
+#Eclipse related
+bin
+gen
+
+#Maven related
+target
