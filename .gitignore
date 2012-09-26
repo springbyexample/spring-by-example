@@ -2,8 +2,11 @@
 Servers/
 
 #Eclipse related
-bin
-gen
+bin/
+gen/
+*.project
+*.classpath
+.settings/
 
 #Maven related
-target
+target/
