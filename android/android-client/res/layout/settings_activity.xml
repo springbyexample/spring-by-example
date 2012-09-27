@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="ua.com.springbyexample.fragment.PrefFragment"
+        android:name="ua.com.springbyexample.fragment.SettingsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
