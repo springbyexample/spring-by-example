@@ -36,6 +36,7 @@
 
 	<util:list id="annotatedPersistenceClasses">
 		<value>ua.com.springbyexample.domain.Employee</value>
+        <value>ua.com.springbyexample.domain.User</value>
 	</util:list>
 
 	<util:properties id="hibernateProperties" location="classpath:hibernate.properties" />

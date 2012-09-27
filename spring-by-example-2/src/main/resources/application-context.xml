@@ -17,6 +17,7 @@
 	
 	<import resource="db.xml" />
 	<import resource="jms.xml" />
+    <import resource="security-context.xml"/>
 		 
 	
 </beans>

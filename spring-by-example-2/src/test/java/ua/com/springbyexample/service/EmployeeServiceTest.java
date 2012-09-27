@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.springbyexample.domain.Employee;
 
 @ContextConfiguration("/test-context.xml")
-@ActiveProfiles("jpa")
+@ActiveProfiles("hibernate")
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class EmployeeServiceTest {

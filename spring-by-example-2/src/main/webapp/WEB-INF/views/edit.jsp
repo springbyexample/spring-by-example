@@ -9,8 +9,9 @@
 <h1>
 	Editing Employee ${employee.id} - ${employee.lastName}  ${employee.firstName}  
 </h1>
-<form:form commandName="employee" style="padding:8px">
+<form:form commandName="employee" action="${pageContext.request.contextPath}/employee/edit" style="padding:8px">
     ID - ${employee.id}<br/>
+        <form:hidden path="id" />
     <p>
         First Name:<br/>
         <form:errors path="firstName" cssStyle="color:red" /><br />

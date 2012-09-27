@@ -60,4 +60,8 @@ public abstract class AbstractGenericDaoImpl<E, PK extends Serializable> impleme
 		sessionFactory.getCurrentSession().saveOrUpdate(entity);
 	}
 
+    protected SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
 }

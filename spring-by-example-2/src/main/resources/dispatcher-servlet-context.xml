@@ -14,8 +14,8 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	
 	<annotation-driven />
-	
-	<context:annotation-config />	
+
+	<context:annotation-config />
 	
 	<context:component-scan base-package="ua.com.springbyexample">
 		<context:exclude-filter type="assignable" expression="ua.com.springbyexample.dao.jdbc.EmployeeJdbcDao"/>
