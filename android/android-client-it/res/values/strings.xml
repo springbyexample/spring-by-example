@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <string name="hello">Hello android-client-it!</string>
     <string name="app_name">android-client-it - tests</string>
 </resources>

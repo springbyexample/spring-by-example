@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/pref_connection" >
+        <EditTextPreference
+            android:key="@string/key_server_ip"
+            android:summary="@string/server_ip_summary"
+            android:title="@string/server_ip_title" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
