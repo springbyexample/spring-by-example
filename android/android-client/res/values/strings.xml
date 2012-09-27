@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <string name="app_name">android-client</string>
+    <string name="actionBarTitle">SbE client</string>
+    <string name="MainActivityActivityLabel">SpringByExample client</string>
+    <string name="menuItemAdd">Add item</string>
+    <string name="menuItemSettings">Settings</string>
+    <string name="menuItemRefresh">Refresh</string>
+    <string name="pref_connection">Connection</string>
+    <string name="settings_title">Settings</string>
+    <string name="key_server_ip">key_server_ip</string>
+    <string name="server_ip_title">Server IP</string>
+    <string name="server_ip_summary">Server to be used by application</string>
+    <string name="name_label">Name</string>
+    <string name="submit_label">Submit</string>
+</resources>
