@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="ua.com.springbyexample.test" android:versionCode="1" android:versionName="1.0-SNAPSHOT">
+    package="ua.com.springbyexample.test"
+    android:versionCode="1"
+    android:versionName="1.0-SNAPSHOT" >
 
-  <application android:icon="@drawable/icon" android:label="@string/app_name">
-    <uses-library android:name="android.test.runner" />
-  </application>
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="15" />
 
-  <instrumentation android:targetPackage="ua.com.springbyexample"
-    android:name="android.test.InstrumentationTestRunner" />
+    <application
+        android:icon="@drawable/icon"
+        android:label="@string/app_name" >
+        <uses-library android:name="android.test.runner" />
+    </application>
+
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:targetPackage="ua.com.springbyexample" />
 
 </manifest>
-
