@@ -16,17 +16,15 @@
     <context:component-scan base-package="ua.com.springbyexample.security" />
 
      <http use-expressions="true">
-         <intercept-url pattern="/favicon.ico" access="permitAll"/>
          <intercept-url pattern="/employee/**" access="isAuthenticated()" />
-         <intercept-url pattern="/**" access="denyAll" />
          <form-login />
-         <logout />
+         <logout logout-url="/logout"/>
      </http>
 
     <authentication-manager>
         <authentication-provider user-service-ref="userService">
-            <password-encoder hash="sha" >
-                <!--<salt-source user-property="username"/>-->
+            <password-encoder hash="sha-256" >
+                <salt-source user-property="username"/>
             </password-encoder>
         </authentication-provider>
     </authentication-manager>

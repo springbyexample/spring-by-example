@@ -1,7 +1,8 @@
 package ua.com.springbyexample.domain;
 
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
@@ -18,7 +19,7 @@ import java.util.Collection;
  */
 public class UserDetailsAdapter implements UserDetails {
 
-    private static final GrantedAuthority ADMIN_AUTHORITY = new GrantedAuthorityImpl("admin");
+    private static final GrantedAuthority ADMIN_AUTHORITY = new SimpleGrantedAuthority("admin");
 
     private User user;
 
@@ -62,7 +63,8 @@ public class UserDetailsAdapter implements UserDetails {
     }
 
     public static void main(String args[]) {
-        PasswordEncoder encoder = new StandardPasswordEncoder("oleksiy.rezchykov@gmail.com");
-        System.out.println(encoder.encode("qwer1234"));
+        //PasswordEncoder encoder = new StandardPasswordEncoder("oleksiy.rezchykov@gmail.com");
+//        System.out.println(encoder.encode("qwer1234"));
+        System.out.println(new ShaPasswordEncoder(256).encodePassword("qwer1234", "oleksiy.rezchykov@gmail.com"));
     }
 }

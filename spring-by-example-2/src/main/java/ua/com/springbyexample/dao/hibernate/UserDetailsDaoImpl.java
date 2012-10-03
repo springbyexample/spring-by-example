@@ -22,6 +22,6 @@ public class UserDetailsDaoImpl extends AbstractGenericDaoImpl<User, Long> imple
     public User findByUsername(String email) {
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(User.class).add(Restrictions.eq("email", email));
         User user = (User) criteria.uniqueResult();
-        return user;  //To change body of implemented methods use File | Settings | File Templates.
+        return user;
     }
 }
