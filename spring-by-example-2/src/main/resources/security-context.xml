@@ -17,6 +17,8 @@
 
      <http use-expressions="true">
          <intercept-url pattern="/employee/**" access="isAuthenticated()" />
+         <!-- Security Exception For Android Client -->
+         <intercept-url pattern="/android/**" access="permitAll" />
          <form-login />
          <logout logout-url="/logout"/>
      </http>
