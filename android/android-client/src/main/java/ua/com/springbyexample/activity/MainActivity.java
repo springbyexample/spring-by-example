@@ -25,6 +25,7 @@ public class MainActivity extends BaseActivity {
 
 		// set title and subtitle of the action bar
 		actionBar.setTitle(R.string.actionBarTitle);
+		actionBar.setDisplayHomeAsUpEnabled(false);
 	}
 
 }

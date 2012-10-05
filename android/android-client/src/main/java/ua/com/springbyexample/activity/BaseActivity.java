@@ -21,6 +21,7 @@ public abstract class BaseActivity extends Activity {
 		// get reference to the action bar
 		actionBar = getActionBar();
 		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		// actionBar.setSubtitle(getString(R.string.actionBarSubtitle));
 	}
 

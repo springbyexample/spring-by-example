@@ -14,4 +14,4 @@ public class SettingsActivity extends BaseActivity {
 
 		actionBar.setTitle(R.string.settings_title);
 	}
-}
+} 
