@@ -16,4 +16,8 @@
 Name</string>
     <string name="project_label">Project</string>
     <string name="menuItemSave">Save Item</string>
+    <string name="success_add_toast">Employee created and will be uploaded in a moments.</string>
+    <string name="invalid_fname_error">Please, provide first name</string>
+    <string name="invalid_sname_error">Please, provide second name</string>
+    <string name="invalid_project_error">Please, provide project name</string>
 </resources>

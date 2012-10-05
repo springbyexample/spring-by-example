@@ -6,6 +6,7 @@ import ua.com.springbyexample.activity.SettingsActivity;
 import ua.com.springbyexample.dao.DBConsts;
 import ua.com.springbyexample.dao.EmployeeProvider;
 import ua.com.springbyexample.dao.model.Employee;
+import ua.com.springbyexample.net.SyncService;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -22,6 +23,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 import android.widget.Toast;
+import de.akquinet.android.androlog.Log;
 
 public class ItemsListFragment extends ListFragment implements
 		LoaderCallbacks<Cursor> {
@@ -49,7 +51,7 @@ public class ItemsListFragment extends ListFragment implements
 		adapter.setViewBinder(VIEW_BINDER);
 		setListAdapter(adapter);
 
-		getLoaderManager().initLoader(0, null, this);
+		getLoaderManager().initLoader(0, null, this).forceLoad();
 	}
 
 	@Override
@@ -66,8 +68,7 @@ public class ItemsListFragment extends ListFragment implements
 			return true;
 
 		case R.id.menuItemRefresh:
-			Toast.makeText(getActivity(), getString(R.string.menuItemRefresh),
-					Toast.LENGTH_SHORT).show();
+			onRefresh();
 			return true;
 
 		case R.id.menuItemSettings:
@@ -75,6 +76,15 @@ public class ItemsListFragment extends ListFragment implements
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void onRefresh() {
+		Toast.makeText(getActivity(),
+				"Starting synchronization with server...", Toast.LENGTH_SHORT)
+				.show();
+
+		Intent intent = new Intent(getActivity(), SyncService.class);
+		getActivity().startService(intent);
 	}
 
 	private void startActivity(Class<? extends Activity> activityToStart) {
@@ -88,6 +98,8 @@ public class ItemsListFragment extends ListFragment implements
 	}
 
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+		Log.i("onLoadFinished");
+		//TODO: fix issue - data is not reloading for some reason...
 		((SimpleCursorAdapter) getListAdapter()).swapCursor(cursor);
 	}
 
