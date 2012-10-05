@@ -12,9 +12,7 @@
         android:icon="@drawable/ic_stat_spring_logo"
         android:label="@string/app_name"
         android:theme="@style/Theme.springbyexample" >
-        <activity
-            android:name=".activity.MainActivity"
-            android:label="@string/MainActivityActivityLabel" >
+        <activity android:name=".activity.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,6 +21,13 @@
         </activity>
         <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.EditItemActivity" />
+
+        <provider
+            android:name=".dao.EmployeeProvider"
+            android:authorities="ua.com.springbyexample.employeeprovider"
+            android:exported="false" />
+
+        <service android:name="ua.com.springbyexample.net.SyncService" />
     </application>
 
 </manifest>
