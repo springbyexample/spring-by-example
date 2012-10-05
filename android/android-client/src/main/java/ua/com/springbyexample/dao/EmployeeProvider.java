@@ -80,7 +80,9 @@ public class EmployeeProvider extends ContentProvider {
 			throw new SQLException("Failed to insert row into " + uri);
 		}
 		Uri newItemUri = ContentUris.withAppendedId(CONTENT_URI, rowId);
-		getContext().getContentResolver().notifyChange(newItemUri, null);
+		// we should notify on basic URI, as nobody listens yet for unknown
+		// id...
+		getContext().getContentResolver().notifyChange(uri, null);
 		return newItemUri;
 	}
 
@@ -126,10 +128,14 @@ public class EmployeeProvider extends ContentProvider {
 			Log.i(TAG, "create SQL: " + DBConsts.DATABASE_CREATE);
 			db.execSQL(DBConsts.DATABASE_CREATE);
 
+			// SIMPLE TEST
 			ContentValues values = new ContentValues();
 			values.put(DBConsts.FIELD_FNAME, "Vasya");
 			values.put(DBConsts.FIELD_SNAME, "Pupkin");
 			values.put(DBConsts.FIELD_PROJECT, "Spring");
+			values.put(DBConsts.FIELD_SYNC_STATUS,
+					DBConsts.SYNC_STATUS.CREATE.ordinal());
+
 			db.insert(DBConsts.TABLE_NAME, null, values);
 
 		}

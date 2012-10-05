@@ -1,6 +1,11 @@
 package ua.com.springbyexample.dao.model;
 
-
+/**
+ * Server bean representation
+ * 
+ * @author akaverin
+ * 
+ */
 public class Employee {
 
 	private Long id;
@@ -10,8 +15,6 @@ public class Employee {
 	private String lastName;
 
 	private String project;
-	
-	//TODO: add status field for sync status
 
 	// private Set<Employee> projectMates;
 
@@ -51,12 +54,12 @@ public class Employee {
 		this.project = project;
 	}
 
-//	public Set<Employee> getProjectMates() {
-//		return projectMates;
-//	}
-//
-//	public void setProjectMates(Set<Employee> projectMates) {
-//		this.projectMates = projectMates;
-//	}
+	// public Set<Employee> getProjectMates() {
+	// return projectMates;
+	// }
+	//
+	// public void setProjectMates(Set<Employee> projectMates) {
+	// this.projectMates = projectMates;
+	// }
 
 }
