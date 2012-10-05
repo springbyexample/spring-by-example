@@ -22,6 +22,17 @@
 			<groupId>de.akquinet.android.androlog</groupId>
 			<artifactId>androlog</artifactId>
 		</dependency>
+		<!-- Spring for Android -->
+		<dependency>
+			<groupId>org.springframework.android</groupId>
+			<artifactId>spring-android-rest-template</artifactId>
+			<version>1.0.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.10</version>
+		</dependency>
 	</dependencies>
 
 	<build>
