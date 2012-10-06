@@ -2,11 +2,17 @@ package ua.com.springbyexample.dao;
 
 import java.util.List;
 
+import ua.com.springbyexample.dao.model.Employee;
 import android.content.ContentValues;
 import android.content.Context;
 
-import ua.com.springbyexample.dao.model.Employee;
-
+/**
+ * DAO layer to provider {@link Employee} POJO to {@link EmployeeProvider}
+ * bridge. Useful when we work with POJOs obtained from REST API layer
+ * 
+ * @author akaverin
+ * 
+ */
 public class EmployeeDAO {
 
 	public static void save(Context context, List<Employee> employees) {

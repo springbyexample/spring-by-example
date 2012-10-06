@@ -1,12 +1,12 @@
 package ua.com.springbyexample.fragment;
 
 import ua.com.springbyexample.R;
+import ua.com.springbyexample.SpringApplication;
 import ua.com.springbyexample.activity.EditItemActivity;
 import ua.com.springbyexample.activity.SettingsActivity;
 import ua.com.springbyexample.dao.DBConsts;
 import ua.com.springbyexample.dao.EmployeeProvider;
 import ua.com.springbyexample.dao.model.Employee;
-import ua.com.springbyexample.net.SyncService;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -22,7 +22,6 @@ import android.view.View;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
-import android.widget.Toast;
 import de.akquinet.android.androlog.Log;
 
 public class ItemsListFragment extends ListFragment implements
@@ -30,9 +29,12 @@ public class ItemsListFragment extends ListFragment implements
 
 	private static final NameBinder VIEW_BINDER = new NameBinder();
 
+	private SpringApplication application;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		application = (SpringApplication) activity.getApplication();
 	}
 
 	@Override
@@ -51,7 +53,7 @@ public class ItemsListFragment extends ListFragment implements
 		adapter.setViewBinder(VIEW_BINDER);
 		setListAdapter(adapter);
 
-		getLoaderManager().initLoader(0, null, this).forceLoad();
+		getLoaderManager().initLoader(0, null, this);
 	}
 
 	@Override
@@ -79,12 +81,7 @@ public class ItemsListFragment extends ListFragment implements
 	}
 
 	private void onRefresh() {
-		Toast.makeText(getActivity(),
-				"Starting synchronization with server...", Toast.LENGTH_SHORT)
-				.show();
-
-		Intent intent = new Intent(getActivity(), SyncService.class);
-		getActivity().startService(intent);
+		application.getSyncManager().startSync();
 	}
 
 	private void startActivity(Class<? extends Activity> activityToStart) {
@@ -92,6 +89,7 @@ public class ItemsListFragment extends ListFragment implements
 	}
 
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+		Log.i("onCreateLoader");
 		CursorLoader loader = new CursorLoader(getActivity(),
 				EmployeeProvider.CONTENT_URI, null, null, null, null);
 		return loader;
@@ -99,7 +97,7 @@ public class ItemsListFragment extends ListFragment implements
 
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 		Log.i("onLoadFinished");
-		//TODO: fix issue - data is not reloading for some reason...
+		// TODO: fix issue - data is not reloading for some reason...
 		((SimpleCursorAdapter) getListAdapter()).swapCursor(cursor);
 	}
 

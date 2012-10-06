@@ -1,6 +1,7 @@
 package ua.com.springbyexample.dao;
 
 import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -17,10 +18,15 @@ public class EmployeeProvider extends ContentProvider {
 
 	private static final String TAG = EmployeeProvider.class.getSimpleName();
 
-	static final String PROVIDER_NAME = "ua.com.springbyexample.employeeprovider";
+	private static final String AUTHORITY = "ua.com.springbyexample.employeeprovider";
+	private static final String BASE_PATH = "employees";
+	private static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+			+ "/vnd.ua.com.springbyexample.todos";
+	private static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+			+ "/vnd.ua.com.springbyexample.todo";
 
-	public static final Uri CONTENT_URI = Uri.parse("content://"
-			+ PROVIDER_NAME);
+	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
+			+ "/" + BASE_PATH);
 
 	static final int EMPLOYEES = 1;
 	static final int EMPLOYEE_ID = 2;
@@ -29,8 +35,8 @@ public class EmployeeProvider extends ContentProvider {
 
 	static {
 		uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		uriMatcher.addURI(PROVIDER_NAME, "empliyees", EMPLOYEES);
-		uriMatcher.addURI(PROVIDER_NAME, "employee/#", EMPLOYEE_ID);
+		uriMatcher.addURI(AUTHORITY, BASE_PATH, EMPLOYEES);
+		uriMatcher.addURI(AUTHORITY, BASE_PATH + "/#", EMPLOYEE_ID);
 	}
 
 	DatabaseHelper databaseHelper;
@@ -60,10 +66,10 @@ public class EmployeeProvider extends ContentProvider {
 	public String getType(Uri uri) {
 		switch (uriMatcher.match(uri)) {
 		case EMPLOYEES:
-			return "vnd.android.cursor.dir/vnd." + PROVIDER_NAME;
+			return CONTENT_TYPE;
 
 		case EMPLOYEE_ID:
-			return "vnd.android.cursor.item/vnd." + PROVIDER_NAME;
+			return CONTENT_ITEM_TYPE;
 		}
 		throw new IllegalArgumentException("Unsupported URI: " + uri);
 	}
@@ -73,17 +79,48 @@ public class EmployeeProvider extends ContentProvider {
 	 */
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
+		checkUri(uri);
+
 		SQLiteDatabase database = databaseHelper.getWritableDatabase();
 		long rowId = database.insert(DBConsts.TABLE_NAME, "", values);
 		database.close();
 		if (rowId <= 0) {
 			throw new SQLException("Failed to insert row into " + uri);
 		}
-		Uri newItemUri = ContentUris.withAppendedId(CONTENT_URI, rowId);
+		Uri newItemUri = ContentUris.withAppendedId(uri, rowId);
 		// we should notify on basic URI, as nobody listens yet for unknown
 		// id...
 		getContext().getContentResolver().notifyChange(uri, null);
 		return newItemUri;
+	}
+
+	@Override
+	public int bulkInsert(Uri uri, ContentValues[] valuesArray) {
+		checkUri(uri);
+
+		SQLiteDatabase database = databaseHelper.getWritableDatabase();
+		// ALL or nothing approach
+		database.beginTransaction();
+		try {
+			for (ContentValues values : valuesArray) {
+				long newID = database.insertOrThrow(DBConsts.TABLE_NAME, null,
+						values);
+				if (newID <= 0) {
+					throw new SQLException("Failed to insert row into " + uri);
+				}
+			}
+			database.setTransactionSuccessful();
+			// we should notify on basic URI, as nobody listens yet for unknown
+			// id...
+			getContext().getContentResolver().notifyChange(uri, null);
+
+		} finally {
+			database.endTransaction();
+			// Looks like this call is causing exception down the call stack...
+			// TODO: verify
+			// database.close();
+		}
+		return valuesArray.length;
 	}
 
 	/**
@@ -95,14 +132,24 @@ public class EmployeeProvider extends ContentProvider {
 		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		queryBuilder.setTables(DBConsts.TABLE_NAME);
 
-		if (uriMatcher.match(uri) == EMPLOYEE_ID) {
+		switch (uriMatcher.match(uri)) {
+		case EMPLOYEES:
+			break;
+
+		case EMPLOYEE_ID:
 			queryBuilder.appendWhere(DBConsts._ID + "="
-					+ uri.getPathSegments().get(1));
+					+ uri.getLastPathSegment());
+			break;
+
+		default:
+			throw new IllegalAccessError("Unknown URI: " + uri);
 		}
+
 		SQLiteDatabase database = databaseHelper.getWritableDatabase();
 		Cursor cursor = queryBuilder.query(database, projection, selection,
 				selectionArgs, null, null, sortOrder);
 
+		// Make sure that potential listeners are getting notified
 		cursor.setNotificationUri(getContext().getContentResolver(), uri);
 		return cursor;
 	}
@@ -146,6 +193,12 @@ public class EmployeeProvider extends ContentProvider {
 			onCreate(db);
 		}
 
+	}
+
+	private void checkUri(Uri uri) {
+		if (uriMatcher.match(uri) != EMPLOYEES) {
+			throw new IllegalArgumentException("Unsupported URI: " + uri);
+		}
 	}
 
 }
