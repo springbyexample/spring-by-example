@@ -6,9 +6,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+/**
+ * Class with common logic for all {@link Activity} implementations
+ * 
+ * @author akaverin
+ * 
+ */
 public abstract class BaseActivity extends Activity {
 
-	// reference to manipulate the action bar
+	/**
+	 * reference to manipulate the {@link ActionBar}
+	 */
 	ActionBar actionBar = null;
 
 	/**
@@ -22,12 +30,12 @@ public abstract class BaseActivity extends Activity {
 		actionBar = getActionBar();
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		// TODO: re-use to notify last UPDATE time stamp...
 		// actionBar.setSubtitle(getString(R.string.actionBarSubtitle));
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			// when app icon in action bar is clicked, show home/main activity

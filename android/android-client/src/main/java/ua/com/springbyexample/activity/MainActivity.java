@@ -14,8 +14,15 @@
 package ua.com.springbyexample.activity;
 
 import ua.com.springbyexample.R;
+import android.app.Activity;
 import android.os.Bundle;
 
+/**
+ * Application default {@link Activity}
+ * 
+ * @author akaverin
+ * 
+ */
 public class MainActivity extends BaseActivity {
 
 	@Override
@@ -23,7 +30,8 @@ public class MainActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
 
-		// set title and subtitle of the action bar
+		// TODO: fix or leave APP only title, as it has different text which
+		// noticeably changed during app initialization
 		actionBar.setTitle(R.string.actionBarTitle);
 		actionBar.setDisplayHomeAsUpEnabled(false);
 	}
