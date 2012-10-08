@@ -4,9 +4,8 @@ import ua.com.springbyexample.R;
 import ua.com.springbyexample.SpringApplication;
 import ua.com.springbyexample.activity.EditItemActivity;
 import ua.com.springbyexample.activity.SettingsActivity;
-import ua.com.springbyexample.dao.DBConsts;
-import ua.com.springbyexample.dao.EmployeeProvider;
 import ua.com.springbyexample.dao.model.Employee;
+import ua.com.springbyexample.dao.provider.EmployeeContentProvider;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -42,11 +41,11 @@ public class ItemsListFragment extends ListFragment implements
 		super.onActivityCreated(savedInstanceState);
 		setHasOptionsMenu(true);
 
-		String[] from = new String[] { DBConsts.FIELD_FNAME,
-				DBConsts.FIELD_SNAME, DBConsts.FIELD_PROJECT
+		String[] from = new String[] { EmployeeContentProvider.SECOND_NAME,
+				EmployeeContentProvider.PROJECT
 
 		};
-		int[] to = new int[] { 0, android.R.id.text1, android.R.id.text2 };
+		int[] to = new int[] { android.R.id.text1, android.R.id.text2 };
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(),
 				android.R.layout.simple_list_item_2, null, from, to, 0);
@@ -91,13 +90,12 @@ public class ItemsListFragment extends ListFragment implements
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		Log.i("onCreateLoader");
 		CursorLoader loader = new CursorLoader(getActivity(),
-				EmployeeProvider.CONTENT_URI, null, null, null, null);
+				EmployeeContentProvider.CONTENT_URI, null, null, null, null);
 		return loader;
 	}
 
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 		Log.i("onLoadFinished");
-		// TODO: fix issue - data is not reloading for some reason...
 		((SimpleCursorAdapter) getListAdapter()).swapCursor(cursor);
 	}
 
@@ -115,8 +113,9 @@ public class ItemsListFragment extends ListFragment implements
 	private static final class NameBinder implements ViewBinder {
 		public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
 			if (android.R.id.text1 == view.getId()) {
-				String result = cursor.getString(columnIndex - 1) + " "
-						+ cursor.getString(columnIndex);
+				String result = cursor.getString(cursor
+						.getColumnIndex(EmployeeContentProvider.FIRST_NAME))
+						+ " " + cursor.getString(columnIndex);
 				((TextView) view).setText(result);
 				return true;
 			}

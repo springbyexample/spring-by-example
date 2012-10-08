@@ -25,13 +25,13 @@
         <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.EditItemActivity" />
 
-        <provider
-            android:name=".dao.EmployeeProvider"
-            android:authorities="ua.com.springbyexample.employeeprovider"
-            android:exported="false" />
-
         <service
             android:name="ua.com.springbyexample.net.SyncService"
+            android:exported="false" />
+
+        <provider
+            android:name="ua.com.springbyexample.dao.provider.EmployeeContentProvider"
+            android:authorities="ua.com.springbyexample.dao.provider.employeecontentprovider"
             android:exported="false" />
     </application>
 

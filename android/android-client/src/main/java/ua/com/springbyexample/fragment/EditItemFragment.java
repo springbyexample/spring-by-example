@@ -2,8 +2,8 @@ package ua.com.springbyexample.fragment;
 
 import ua.com.springbyexample.R;
 import ua.com.springbyexample.dao.DBConsts;
-import ua.com.springbyexample.dao.EmployeeProvider;
 import ua.com.springbyexample.dao.model.Employee;
+import ua.com.springbyexample.dao.provider.EmployeeContentProvider;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.os.Bundle;
@@ -68,14 +68,14 @@ public class EditItemFragment extends Fragment {
 			return;
 		}
 
-		ContentValues values = new ContentValues(3);
-		values.put(DBConsts.FIELD_FNAME, firstNameEdit.getText().toString());
-		values.put(DBConsts.FIELD_SNAME, secondNameEdit.getText().toString());
-		values.put(DBConsts.FIELD_PROJECT, projectEdit.getText().toString());
-		values.put(DBConsts.FIELD_SYNC_STATUS,
+		ContentValues values = new ContentValues(4);
+		values.put(EmployeeContentProvider.FIRST_NAME, firstNameEdit.getText().toString());
+		values.put(EmployeeContentProvider.SECOND_NAME, secondNameEdit.getText().toString());
+		values.put(EmployeeContentProvider.PROJECT, projectEdit.getText().toString());
+		values.put(EmployeeContentProvider.SYNC_STATUS,
 				DBConsts.SYNC_STATUS.CREATE.ordinal());
 
-		getActivity().getContentResolver().insert(EmployeeProvider.CONTENT_URI,
+		getActivity().getContentResolver().insert(EmployeeContentProvider.CONTENT_URI,
 				values);
 
 		Toast.makeText(getActivity(), R.string.success_add_toast,

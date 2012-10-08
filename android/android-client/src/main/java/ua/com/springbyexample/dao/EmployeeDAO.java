@@ -3,6 +3,7 @@ package ua.com.springbyexample.dao;
 import java.util.List;
 
 import ua.com.springbyexample.dao.model.Employee;
+import ua.com.springbyexample.dao.provider.EmployeeContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
 
@@ -23,16 +24,16 @@ public class EmployeeDAO {
 			bulkValues[i] = employeToValues(employee);
 		}
 
-		context.getContentResolver().bulkInsert(EmployeeProvider.CONTENT_URI,
-				bulkValues);
+		context.getContentResolver().bulkInsert(
+				EmployeeContentProvider.CONTENT_URI, bulkValues);
 	}
 
 	private static ContentValues employeToValues(Employee employee) {
 		ContentValues values = new ContentValues();
-		values.put(DBConsts.FIELD_ID, employee.getId());
-		values.put(DBConsts.FIELD_FNAME, employee.getFirstName());
-		values.put(DBConsts.FIELD_SNAME, employee.getLastName());
-		values.put(DBConsts.FIELD_PROJECT, employee.getProject());
+		values.put(EmployeeContentProvider.ID, employee.getId());
+		values.put(EmployeeContentProvider.FIRST_NAME, employee.getFirstName());
+		values.put(EmployeeContentProvider.SECOND_NAME, employee.getLastName());
+		values.put(EmployeeContentProvider.PROJECT, employee.getProject());
 		return values;
 	}
 
