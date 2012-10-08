@@ -13,6 +13,7 @@ public class SpringApplication extends Application {
 
 	SyncManager syncManager;
 
+	//TODO: configure AndroLog
 	@Override
 	public void onCreate() {
 		super.onCreate();
