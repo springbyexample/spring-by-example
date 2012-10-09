@@ -31,7 +31,7 @@ public class EmployeeContentProvider extends ContentProvider {
 	private EmployeeOpenHelper dbHelper;
 	private static HashMap<String, String> EMPLOYEE_PROJECTION_MAP;
 	private static final String TABLE_NAME = "employee";
-	private static final String AUTHORITY = "ua.com.springbyexample.dao.provider.employeecontentprovider";
+	static final String AUTHORITY = "ua.com.springbyexample.dao.provider.employeecontentprovider";
 
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
 			+ "/" + TABLE_NAME);

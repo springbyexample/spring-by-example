@@ -12,6 +12,7 @@
  */
 package ua.com.springbyexample.dao.provider;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -49,9 +50,6 @@ import android.database.sqlite.SQLiteOpenHelper;
  * @see SQLiteOpenHelper
  */
 public class EmployeeOpenHelper extends SQLiteOpenHelper {
-
-	// Android's default system path for your application's database.
-	private static String DB_PATH = "/data/data/ua.com.springbyexample/databases/";
 
 	private static String DB_NAME = "employee.db";
 
@@ -144,8 +142,7 @@ public class EmployeeOpenHelper extends SQLiteOpenHelper {
 				// Open your local db as the input stream
 				myInput = myContext.getAssets().open(DB_NAME);
 
-				// Path to the just created empty db
-				String outFileName = DB_PATH + DB_NAME;
+				String outFileName = getDataBasePath();
 
 				// Open the empty db as the output stream
 				myOutput = new FileOutputStream(outFileName);
@@ -191,7 +188,7 @@ public class EmployeeOpenHelper extends SQLiteOpenHelper {
 
 		try {
 			// get database path
-			String dbPath = DB_PATH + DB_NAME;
+			String dbPath = getDataBasePath();
 			// try to open the database
 			dbToBeVerified = SQLiteDatabase.openDatabase(dbPath, null,
 					SQLiteDatabase.OPEN_READONLY);
@@ -209,5 +206,10 @@ public class EmployeeOpenHelper extends SQLiteOpenHelper {
 
 		// in case there is a DB entity, the DB exists
 		return dbToBeVerified != null ? true : false;
+	}
+
+	private String getDataBasePath() {
+		File filePath = myContext.getDatabasePath(DB_NAME);
+		return filePath.getAbsolutePath();
 	}
 }
