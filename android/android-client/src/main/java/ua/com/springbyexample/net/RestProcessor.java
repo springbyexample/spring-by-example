@@ -21,8 +21,28 @@ public class RestProcessor {
 
 	// TODO: add RestTemplate and specific URL processing
 
-	public void post(List<Employee> employee) {
+	public void post(List<Employee> employees) {
+		RestTemplate restTemplate = new RestTemplate(true);
 
+		// non-optimal workaround until bulk post if fixed...
+		for (Employee employee : employees) {
+			String response = restTemplate.postForObject(getServerUrl(),
+					employee, String.class);
+		}
+		// Employee[] employeeArray = employee.toArray(new Employee[] {});
+
+		// HttpHeaders headers = new HttpHeaders();
+		//
+		// List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+		// acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+		// headers.setAccept(acceptableMediaTypes);
+		// headers.setContentType(MediaType.APPLICATION_JSON);
+		//
+		// HttpEntity<Employee[]> requestEntity = new HttpEntity<Employee[]>(
+		// employeeArray, headers);
+		//
+		// ResponseEntity<String> response = restTemplate.exchange(
+		// getBulkServerUrl(), HttpMethod.POST, requestEntity, null);
 	}
 
 	public List<Employee> fetchAll() {
@@ -52,6 +72,10 @@ public class RestProcessor {
 		String url = "http://" + ip + ":8080" + RestConsts.EMPLOYEE_ROOT_URL;
 		Log.i("Server URL: " + url);
 		return url;
+	}
+
+	private String getBulkServerUrl() {
+		return getServerUrl() + "/bulk";
 	}
 
 }
