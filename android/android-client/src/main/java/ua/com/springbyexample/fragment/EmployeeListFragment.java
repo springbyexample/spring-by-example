@@ -23,7 +23,7 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 import de.akquinet.android.androlog.Log;
 
-public class ItemsListFragment extends ListFragment implements
+public class EmployeeListFragment extends ListFragment implements
 		LoaderCallbacks<Cursor> {
 
 	private static final NameBinder VIEW_BINDER = new NameBinder();
@@ -74,6 +74,12 @@ public class ItemsListFragment extends ListFragment implements
 
 		case R.id.menuItemSettings:
 			startActivity(SettingsActivity.class);
+			return true;
+
+		case R.id.menuItemCache:
+			// clean cache
+			getActivity().getContentResolver().delete(
+					EmployeeContentProvider.CONTENT_URI, null, null);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

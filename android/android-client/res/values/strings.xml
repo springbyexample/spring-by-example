@@ -20,4 +20,5 @@ Name</string>
     <string name="invalid_fname_error">Please, provide first name</string>
     <string name="invalid_sname_error">Please, provide second name</string>
     <string name="invalid_project_error">Please, provide project name</string>
+    <string name="menuItemClearCache">Clear cache</string>
 </resources>
