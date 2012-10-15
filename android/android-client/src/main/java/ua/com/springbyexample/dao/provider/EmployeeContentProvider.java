@@ -26,6 +26,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
 
+//TODO: consider to provide URI for _ID field back, as it is more handy in filtering
 public class EmployeeContentProvider extends ContentProvider {
 
 	private EmployeeOpenHelper dbHelper;
