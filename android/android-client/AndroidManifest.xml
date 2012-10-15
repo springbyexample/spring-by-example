@@ -15,7 +15,9 @@
         android:icon="@drawable/ic_stat_spring_logo"
         android:label="@string/app_name"
         android:theme="@style/Theme.springbyexample" >
-        <activity android:name=".activity.MainActivity" >
+        <activity
+            android:name=".activity.MainActivity"
+            android:uiOptions="splitActionBarWhenNarrow" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.SettingsActivity" />
-        <activity android:name=".activity.EditItemActivity" />
+        <activity android:name=".activity.EditActivity" />
 
         <service
             android:name="ua.com.springbyexample.net.SyncService"

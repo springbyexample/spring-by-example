@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="ua.com.springbyexample.fragment.EditItemFragment"
+        android:name="ua.com.springbyexample.fragment.EditFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

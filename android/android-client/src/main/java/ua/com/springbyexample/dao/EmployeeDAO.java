@@ -25,6 +25,9 @@ public class EmployeeDAO {
 		for (int i = 0; i < employees.size(); ++i) {
 			Employee employee = employees.get(i);
 			bulkValues[i] = employeeToValues(employee);
+			// set default status...
+			bulkValues[i].put(EmployeeContentProvider.SYNC_STATUS,
+					DBConsts.SYNC_STATUS.NOOP.name());
 		}
 
 		context.getContentResolver().bulkInsert(
@@ -66,7 +69,7 @@ public class EmployeeDAO {
 
 		} while (cursor.moveToNext());
 
-		//return Collections.unmodifiableList(employees);
+		// return Collections.unmodifiableList(employees);
 		return employees;
 	}
 
