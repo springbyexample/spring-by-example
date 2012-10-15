@@ -8,22 +8,24 @@ import org.springframework.web.client.RestTemplate;
 import ua.com.springbyexample.R;
 import ua.com.springbyexample.dao.model.Employee;
 import android.content.Context;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import de.akquinet.android.androlog.Log;
 
-public class RestProcessor {
+public final class RestProcessor {
 
-	private Context context;
+	private final Context context;
+
+	private final RestTemplate restTemplate;
 
 	public RestProcessor(Context context) {
 		this.context = context;
+		restTemplate = new RestTemplate(true);
 	}
 
 	// TODO: add RestTemplate and specific URL processing
 
 	public void post(List<Employee> employees) {
-		RestTemplate restTemplate = new RestTemplate(true);
-
 		// non-optimal workaround until bulk post if fixed...
 		for (Employee employee : employees) {
 			String response = restTemplate.postForObject(getServerUrl(),
@@ -59,10 +61,25 @@ public class RestProcessor {
 
 	public void delete(List<Employee> employees) {
 
+		RestTemplate restTemplate = new RestTemplate(true);
+		Uri baseUri = Uri.parse(getServerUrl());
+
+		for (Employee employee : employees) {
+			Uri deleteItemUri = Uri.withAppendedPath(baseUri, employee.getId()
+					.toString());
+			restTemplate.delete(deleteItemUri.toString());
+		}
 	}
 
 	public void update(List<Employee> employees) {
+		// TODO: in our case URL is the same... for BULK
 
+		// non-optimal workaround until bulk post if fixed...
+		for (Employee employee : employees) {
+			restTemplate.put(
+					getServerUrl().concat(employee.getId().toString()),
+					employee);
+		}
 	}
 
 	private String getServerUrl() {

@@ -9,8 +9,10 @@ import ua.com.springbyexample.dao.EmployeeDAO;
 import ua.com.springbyexample.dao.model.Employee;
 import ua.com.springbyexample.dao.provider.EmployeeContentProvider;
 import android.app.IntentService;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
@@ -28,8 +30,6 @@ public class SyncService extends IntentService {
 		super(SyncService.class.getSimpleName());
 		Log.d("Service created");
 
-		processor = new RestProcessor(getApplicationContext());
-
 		// TODO: replace with notifications like Twitter...
 		uiThreadHandler = new Handler(new Handler.Callback() {
 
@@ -39,6 +39,12 @@ public class SyncService extends IntentService {
 				return true;
 			}
 		});
+	}
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		processor = new RestProcessor(getApplicationContext());
 	}
 
 	@Override
@@ -78,42 +84,60 @@ public class SyncService extends IntentService {
 	}
 
 	private void sendModifiedEmployees() {
-		int status = DBConsts.SYNC_STATUS.UPDATE.ordinal();
 		List<Employee> updatedEmployees = EmployeeDAO
-				.load(buildSyncQuery(status));
+				.load(buildSyncQuery(DBConsts.SYNC_STATUS.UPDATE.name()));
 		if (updatedEmployees.isEmpty()) {
 			return;
 		}
 		processor.post(updatedEmployees);
 
+		changeStatusToNoop(DBConsts.SYNC_STATUS.UPDATE);
 	}
 
 	private void sendDeletedEmployees() {
-		int status = DBConsts.SYNC_STATUS.REMOVE.ordinal();
 		List<Employee> removedEmployees = EmployeeDAO
-				.load(buildSyncQuery(status));
+				.load(buildSyncQuery(DBConsts.SYNC_STATUS.REMOVE.name()));
 		if (removedEmployees.isEmpty()) {
 			return;
 		}
 		processor.delete(removedEmployees);
+
+		// clean DB:
+		getContentResolver().delete(
+				Uri.withAppendedPath(
+						EmployeeContentProvider.SYNC_STATUS_FIELD_CONTENT_URI,
+						DBConsts.SYNC_STATUS.REMOVE.name()), null, null);
 	}
 
 	private void sendCreatedEmployees() {
-		int status = DBConsts.SYNC_STATUS.CREATE.ordinal();
 		List<Employee> createdEmployees = EmployeeDAO
-				.load(buildSyncQuery(status));
+				.load(buildSyncQuery(DBConsts.SYNC_STATUS.CREATE.name()));
 		if (createdEmployees.isEmpty()) {
 			return;
 		}
 		processor.post(createdEmployees);
+
+		changeStatusToNoop(DBConsts.SYNC_STATUS.CREATE);
 	}
 
-	private Cursor buildSyncQuery(int status) {
+	private void changeStatusToNoop(DBConsts.SYNC_STATUS oldStatus) {
+		ContentValues contentValues = new ContentValues(1);
+		contentValues.put(EmployeeContentProvider.SYNC_STATUS,
+				DBConsts.SYNC_STATUS.NOOP.name());
+
+		// change entities status
+		getContentResolver().update(
+				Uri.withAppendedPath(
+						EmployeeContentProvider.SYNC_STATUS_FIELD_CONTENT_URI,
+						oldStatus.name()), contentValues, null, null);
+	}
+
+	private Cursor buildSyncQuery(String status) {
 		// TODO: consider storing in DB status string instead of number...
 		Cursor cursor = getContentResolver().query(
 				EmployeeContentProvider.CONTENT_URI, null,
 				EmployeeContentProvider.SYNC_STATUS + "= ?",
-				new String[] { Integer.toString(status) }, null);
+				new String[] { status }, null);
 		return cursor;
 	}
 
