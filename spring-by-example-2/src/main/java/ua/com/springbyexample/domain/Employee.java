@@ -1,6 +1,7 @@
 package ua.com.springbyexample.domain;
 
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,13 +15,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.validator.constraints.Length;
+import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name  = "employee")
@@ -30,7 +31,10 @@ public class Employee {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)	
-	private Long id;	
+	private Long id;
+
+    @Past
+    private Date date;
 
 	@NotNull(message = "firstName should not be null")
 	@Length(min = 3,max = 30, message = "firstName should be longer than 3 characters and shorter than 30 characters")

@@ -1,14 +1,10 @@
 package ua.com.springbyexample.controller;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,11 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
-
 import ua.com.springbyexample.domain.Employee;
 import ua.com.springbyexample.service.PersistenceService;
+
+import javax.annotation.Resource;
+import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/employee/")
@@ -44,58 +41,49 @@ public class EmployeeController {
 	// private ActivityLogger logger;
 
 	@RequestMapping(method = RequestMethod.GET, value = { "list", "/" })
-	public ModelAndView listEmployees() {
+	public String listEmployees(Model model) {
 		logger.debug("Received request to list persons");
-		ModelAndView mav = new ModelAndView();
-		List<Employee> employeeList = employeeService.find();
 
-		logger.debug("Person Listing count = " + employeeList.size());
+        List<Employee> employeeList = employeeService.find();
 
-		mav.addObject("employeeList", employeeList);
+        logger.debug("Person Listing count = " + employeeList.size());
 
-		mav.setViewName("list");
-
-		return mav;
+        model.addAttribute("employeeList", employeeList);
+		return "listEmployees";
 
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "edit")
-	public ModelAndView editEmployeeParam(@RequestParam(value = "id", required = false) Long id) {
-		return editEmployeeInternal(id);
+	public String editEmployeeParam(@RequestParam(value = "id", required = false) Long id, Model model) {
+		return editEmployeeInternal(id, model);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "edit/{id}")
-	public ModelAndView editEmployeePath(@PathVariable Long id) {
-		return editEmployeeInternal(id);
+	public String editEmployeePath(@PathVariable Long id, Model model) {
+		return editEmployeeInternal(id, model);
 
 	}
 
-	private ModelAndView editEmployeeInternal(Long id) {
+	private String editEmployeeInternal(Long id, Model model) {
 		logger.debug("Received request to edit person id : " + id);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("edit");
-		Employee employee = null;
+		Employee employee;
 		if (id == null) {
 			employee = new Employee();
 		} else {
 			employee = employeeService.find(id);
 			if (employee == null) {
-				RedirectView view = new RedirectView("/employee/edit");
-				view.setContextRelative(true);
-				mav.setView(view);
-				return mav;
+				return "redirect:/employee/edit";
 			}
 		}
-
-		mav.addObject("employee", employee);
-		return mav;
+		model.addAttribute("employee", employee);
+		return "editEmployee";
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = { "edit", "edit/{id}" })
 	public String savePersonParam(@Valid @ModelAttribute Employee employee, BindingResult bindingResult) {
 		logger.debug("Received postback on person " + employee);
 		if (bindingResult.hasErrors()) {
-			return "edit";
+			return "editEmployee";
 		} else {
 			if (employee.getId() != null) {
 				employeeService.update(employee);
@@ -129,7 +117,8 @@ public class EmployeeController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "rest/view/{id}.json", produces = "application/json")
+	@RequestMapping(method = RequestMethod.GET, value = "rest/view/{id}.json",
+            produces = "application/json")
 	@ResponseBody
 	public Employee viewJson(@PathVariable Long id) {
 		logger.debug("Received request to view JSON");
@@ -137,7 +126,8 @@ public class EmployeeController {
 		return employee;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "rest/view/{id}.xml", produces = "application/xml")
+	@RequestMapping(method = RequestMethod.GET, value = "rest/view/{id}.xml",
+            produces = "application/xml")
 	@ResponseBody
 	public Employee viewXml(@PathVariable Long id) {
 		logger.debug("Received request to view XML");

@@ -10,8 +10,6 @@
 	<!-- Scans within the base package of the application for @Components to 
 		configure as beans -->
 
-    <tx:annotation-driven/>
-		
 	<context:annotation-config />
 	<tx:annotation-driven/>
 	
