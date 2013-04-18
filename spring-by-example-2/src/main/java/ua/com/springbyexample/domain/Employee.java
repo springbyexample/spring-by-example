@@ -1,8 +1,7 @@
 package ua.com.springbyexample.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.Length;
-
+import java.util.Date;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,8 +19,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.util.Date;
-import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name  = "employee")
@@ -52,7 +52,7 @@ public class Employee {
 	private String project;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "project_mates", joinColumns = @JoinColumn(name = "employee1", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "employee2", referencedColumnName = "id"))	
+	@JoinTable(name = "project_mates", joinColumns = @JoinColumn(name = "employee1", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "employee2", referencedColumnName = "id"))
 	@JsonIgnore
 	@XmlTransient
 	private Set<Employee> projectMates;

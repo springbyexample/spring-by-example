@@ -11,11 +11,13 @@ import ua.com.springbyexample.domain.Employee;
 import ua.com.springbyexample.service.PersistenceService;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 @RunWith(MockitoJUnitRunner.class)
-public class EmployeeControllerMvcTest {
+public class EmployeeControllerStandaloneTest {
 
 	@Mock
 	private PersistenceService<Employee, Long> employeeService;
@@ -32,10 +34,18 @@ public class EmployeeControllerMvcTest {
 	}
 
 	@Test
-	public void testMappings() throws Exception {
+	public void testEmployeeList() throws Exception {
 
-		mvc.perform(get("/employee/list")).andExpect(status().isOk());
+		mvc.perform(get("/employee/list")).andExpect(status().isOk())
+                .andExpect(content().contentType("text/html"))
+                                          .andExpect(view().name("listEmployees"));
 
 	}
 
+    @Test
+    public void testEmployeeJson() throws Exception {
+        mvc.perform(get("/employee/rest/view/1.json")).andExpect(status().isOk());
+
+
+    }
 }

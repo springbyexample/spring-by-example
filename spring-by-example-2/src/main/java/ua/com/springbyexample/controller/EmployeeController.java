@@ -1,5 +1,9 @@
 package ua.com.springbyexample.controller;
 
+import java.util.List;
+import javax.annotation.Resource;
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,10 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ua.com.springbyexample.domain.Employee;
 import ua.com.springbyexample.service.PersistenceService;
-
-import javax.annotation.Resource;
-import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/employee/")
@@ -40,7 +40,7 @@ public class EmployeeController {
 	// @Resource
 	// private ActivityLogger logger;
 
-	@RequestMapping(method = RequestMethod.GET, value = { "list", "/" })
+	@RequestMapping(method = RequestMethod.GET, value = { "list", "/" }, produces = "text/html")
 	public String listEmployees(Model model) {
 		logger.debug("Received request to list persons");
 
