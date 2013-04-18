@@ -1,5 +1,7 @@
 package ua.com.springbyexample.controller;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,8 +12,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import ua.com.springbyexample.domain.Employee;
 import ua.com.springbyexample.service.PersistenceService;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
@@ -35,12 +37,12 @@ public class EmployeeControllerStandaloneTest {
 
 	@Test
 	public void testEmployeeList() throws Exception {
+        when(employeeService.find()).thenReturn(new ArrayList<Employee>());
+        mvc.perform(get("/employee/list")).andExpect(status().isOk())
+                .andExpect(view().name("listEmployees"));
 
-		mvc.perform(get("/employee/list")).andExpect(status().isOk())
-                .andExpect(content().contentType("text/html"))
-                                          .andExpect(view().name("listEmployees"));
 
-	}
+    }
 
     @Test
     public void testEmployeeJson() throws Exception {

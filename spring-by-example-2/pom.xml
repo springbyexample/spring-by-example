@@ -21,9 +21,16 @@
 
 	<dependencies>
 
+
+
 		<!-- Bean Validation Dependencies -->
 
-		<dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>0.8.1</version>
+        </dependency>
+        <dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>1.0.0.GA</version>

@@ -1,14 +1,19 @@
 package ua.com.springbyexample.controller;
 
+import java.util.List;
+import javax.annotation.Resource;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import ua.com.springbyexample.domain.Employee;
-import ua.com.springbyexample.service.EmployeeService;
 import ua.com.springbyexample.service.PersistenceService;
-
-import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,7 +42,7 @@ public class RestEmployeeController {
         if (employee != null) {
             return employee;
         } else {
-           throw new IllegalArgumentException("Wring employee id");
+           throw new IllegalArgumentException("Wrong employee id");
         }
 
     }
