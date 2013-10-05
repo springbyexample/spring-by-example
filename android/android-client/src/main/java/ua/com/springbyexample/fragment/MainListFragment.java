@@ -234,15 +234,24 @@ public class MainListFragment extends ListFragment implements
                     DBConsts.SYNC_STATUS.REMOVE.name());
 
             long[] ids = getListView().getCheckedItemIds();
-            String[] strIds = new String[ids.length];
+            String[] strIds = new String[ids.length + 1];
+            strIds[0] = DBConsts.SYNC_STATUS.CREATE.name();
             for (int i = 0; i < ids.length; ++i) {
-                strIds[i] = Long.toString(ids[i]);
+                strIds[i + 1] = Long.toString(ids[i]);
+            }
+            String whereById = DBConsts._ID + " in ("
+                    + buildPlaceholders(ids.length) + ")";
+
+            //Delete from cached entities unsent to server
+            int deleteCnt = getActivity().getContentResolver().delete(CONTENT_URI_EMPLOYEE,
+                    SYNC_STATUS + "=? AND " + whereById, strIds);
+            //nothing to update
+            if (deleteCnt == ids.length) {
+                return;
             }
             getActivity().getContentResolver().update(
                     EmployeeContentProvider.CONTENT_URI_EMPLOYEE,
-                    newValues,
-                    DBConsts._ID + " in ("
-                            + buildPlaceholders(ids.length) + ")", strIds);
+                    newValues, SYNC_STATUS + "!=? AND " + whereById, strIds);
         }
 
         private String buildPlaceholders(int length) {
