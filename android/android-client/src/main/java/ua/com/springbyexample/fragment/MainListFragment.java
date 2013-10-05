@@ -1,12 +1,5 @@
 package ua.com.springbyexample.fragment;
 
-import ua.com.springbyexample.R;
-import ua.com.springbyexample.SpringApplication;
-import ua.com.springbyexample.activity.EditActivity;
-import ua.com.springbyexample.activity.SettingsActivity;
-import ua.com.springbyexample.dao.DBConsts;
-import ua.com.springbyexample.dao.model.Employee;
-import ua.com.springbyexample.dao.provider.EmployeeContentProvider;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ListFragment;
@@ -17,11 +10,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -30,237 +19,241 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 import de.akquinet.android.androlog.Log;
+import ua.com.springbyexample.R;
+import ua.com.springbyexample.SpringApplication;
+import ua.com.springbyexample.activity.EditActivity;
+import ua.com.springbyexample.activity.SettingsActivity;
+import ua.com.springbyexample.dao.DBConsts;
+import ua.com.springbyexample.dao.model.Employee;
+import ua.com.springbyexample.dao.provider.EmployeeContentProvider;
+
+import static ua.com.springbyexample.dao.DBConsts.Columns.SYNC_STATUS;
+import static ua.com.springbyexample.dao.provider.EmployeeContentProvider.CONTENT_URI_EMPLOYEE;
 
 /**
  * Employees list fragment. Allows to perform some CRUD and provides menu for
  * main {@link ActionBar}
- * 
+ *
  * @author akaverin
- * 
  */
 public class MainListFragment extends ListFragment implements
-		LoaderCallbacks<Cursor>, OnItemClickListener {
+        LoaderCallbacks<Cursor>, OnItemClickListener {
 
-	private static final NameBinder VIEW_BINDER = new NameBinder();
+    private static final NameBinder VIEW_BINDER = new NameBinder();
+    private final MultiChoiseHandler CHOISE_HANDLER = new MultiChoiseHandler();
+    private SpringApplication application;
 
-	private final MultiChoiseHandler CHOISE_HANDLER = new MultiChoiseHandler();
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        application = (SpringApplication) activity.getApplication();
+    }
 
-	private SpringApplication application;
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+        setupListView();
+        setupAdapter();
+        getLoaderManager().initLoader(0, null, this);
+    }
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		application = (SpringApplication) activity.getApplication();
-	}
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.abmenu, menu);
+    }
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		setHasOptionsMenu(true);
-		setupListView();
-		setupAdapter();
-		getLoaderManager().initLoader(0, null, this);
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuItemAdd:
+                startActivity(EditActivity.class);
+                return true;
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.abmenu, menu);
-	}
+            case R.id.menuItemRefresh:
+                onRefresh();
+                return true;
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menuItemAdd:
-			startActivity(EditActivity.class);
-			return true;
+            case R.id.menuItemSettings:
+                startActivity(SettingsActivity.class);
+                return true;
 
-		case R.id.menuItemRefresh:
-			onRefresh();
-			return true;
+            case R.id.menuItemCache:
+                getActivity().getContentResolver().delete(
+                        EmployeeContentProvider.CONTENT_URI_EMPLOYEE, null, null);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-		case R.id.menuItemSettings:
-			startActivity(SettingsActivity.class);
-			return true;
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
+        // TODO: consider reuse startActivity...
+        Intent intent = new Intent(getActivity(), EditActivity.class);
+        intent.putExtra(EditActivity.EXTRA_EDIT_ID, id);
+        getActivity().startActivity(intent);
+    }
 
-		case R.id.menuItemCache:
-			getActivity().getContentResolver().delete(
-					EmployeeContentProvider.CONTENT_URI, null, null);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        Log.i("onCreateLoader");
+        CursorLoader loader = new CursorLoader(getActivity(),
+                CONTENT_URI_EMPLOYEE, null, SYNC_STATUS + " != ?",
+                new String[]{DBConsts.SYNC_STATUS.REMOVE.name()}, null);
+        return loader;
+    }
 
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		// TODO: consider reuse startActivity...
-		Intent intent = new Intent(getActivity(), EditActivity.class);
-		intent.putExtra(EditActivity.EXTRA_EDIT_ID, id);
-		getActivity().startActivity(intent);
-	}
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        Log.i("onLoadFinished");
+        ((SimpleCursorAdapter) getListAdapter()).swapCursor(cursor);
+    }
 
-	private void onRefresh() {
-		application.getSyncManager().startSync();
-	}
+    public void onLoaderReset(Loader<Cursor> loader) {
+        ((SimpleCursorAdapter) getListAdapter()).swapCursor(null);
+    }
 
-	private void startActivity(Class<? extends Activity> activityToStart) {
-		getActivity().startActivity(new Intent(getActivity(), activityToStart));
-	}
+    private void onRefresh() {
+        application.getSyncManager().startSync();
+    }
 
-	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		Log.i("onCreateLoader");
-		CursorLoader loader = new CursorLoader(getActivity(),
-				EmployeeContentProvider.CONTENT_URI, null,
-				EmployeeContentProvider.SYNC_STATUS + " != ?",
-				new String[] { DBConsts.SYNC_STATUS.REMOVE.name() }, null);
-		return loader;
-	}
+    private void startActivity(Class<? extends Activity> activityToStart) {
+        getActivity().startActivity(new Intent(getActivity(), activityToStart));
+    }
 
-	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-		Log.i("onLoadFinished");
-		((SimpleCursorAdapter) getListAdapter()).swapCursor(cursor);
-	}
+    private void setupAdapter() {
+        String[] from = new String[]{DBConsts.Columns.SECOND_NAME,
+                DBConsts.Columns.PROJECT};
+        int[] to = new int[]{android.R.id.text1, android.R.id.text2};
 
-	public void onLoaderReset(Loader<Cursor> loader) {
-		((SimpleCursorAdapter) getListAdapter()).swapCursor(null);
-	}
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(),
+                android.R.layout.simple_list_item_activated_2, null, from, to,
+                0);
+        adapter.setViewBinder(VIEW_BINDER);
+        setListAdapter(adapter);
+    }
 
-	private void setupAdapter() {
-		String[] from = new String[] { EmployeeContentProvider.SECOND_NAME,
-				EmployeeContentProvider.PROJECT };
-		int[] to = new int[] { android.R.id.text1, android.R.id.text2 };
+    private void setupListView() {
+        ListView listView = getListView();
+        listView.setOnItemClickListener(this);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listView.setMultiChoiceModeListener(CHOISE_HANDLER);
+    }
 
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(),
-				android.R.layout.simple_list_item_activated_2, null, from, to,
-				0);
-		adapter.setViewBinder(VIEW_BINDER);
-		setListAdapter(adapter);
-	}
+    /**
+     * Helper class to force {@link SimpleCursorAdapter} show merged
+     * {@link Employee} name as FirstName + SecondName single value
+     *
+     * @author akaverin
+     */
+    private static final class NameBinder implements ViewBinder {
+        public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+            if (android.R.id.text1 == view.getId()) {
+                String result = cursor.getString(cursor
+                        .getColumnIndex(DBConsts.Columns.FIRST_NAME))
+                        + " " + cursor.getString(columnIndex);
+                ((TextView) view).setText(result);
+                return true;
+            }
+            return false;
+        }
+    }
 
-	private void setupListView() {
-		ListView listView = getListView();
-		listView.setOnItemClickListener(this);
-		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-		listView.setMultiChoiceModeListener(CHOISE_HANDLER);
-	}
+    /**
+     * Helper class to handle List Edit mode
+     *
+     * @author akaverin
+     */
+    private final class MultiChoiseHandler implements MultiChoiceModeListener {
 
-	/**
-	 * Helper class to handle List Edit mode
-	 * 
-	 * @author akaverin
-	 * 
-	 */
-	private final class MultiChoiseHandler implements MultiChoiceModeListener {
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.action_abmenu, menu);
+            mode.setTitle(R.string.actionModeTitle);
 
-		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-			MenuInflater inflater = mode.getMenuInflater();
-			inflater.inflate(R.menu.action_abmenu, menu);
-			mode.setTitle(R.string.actionModeTitle);
+            return true;
+        }
 
-			return true;
-		}
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
 
-		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-			return false;
-		}
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menuItemDelete:
+                    markCheckedItemsForDeletion();
+                    mode.finish();
+                    return true;
 
-		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-			switch (item.getItemId()) {
-			case R.id.menuItemDelete:
-				markCheckedItemsForDeletion();
-				mode.finish();
-				return true;
+                case R.id.menuItemSelect:
+                    setCheckedAll();
+                    return true;
 
-			case R.id.menuItemSelect:
-				setCheckedAll();
-				return true;
+                case R.id.menuItemToggle:
+                    toggleCheckedItems();
+                    return true;
+            }
+            return false;
+        }
 
-			case R.id.menuItemToggle:
-				toggleCheckedItems();
-				return true;
-			}
-			return false;
-		}
+        public void onDestroyActionMode(ActionMode mode) {
+        }
 
-		public void onDestroyActionMode(ActionMode mode) {
-		}
+        public void onItemCheckedStateChanged(ActionMode mode, int position,
+                                              long id, boolean checked) {
+            final int checkedCount = getListView().getCheckedItemCount();
+            switch (checkedCount) {
+                case 0:
+                    mode.setSubtitle(null);
+                    break;
+                case 1:
+                    mode.setSubtitle(R.string.actionModeSubtitle1);
+                    break;
+                default:
+                    mode.setSubtitle("" + checkedCount
+                            + getString(R.string.actionModeSubtitle2));
+                    break;
+            }
+        }
 
-		public void onItemCheckedStateChanged(ActionMode mode, int position,
-				long id, boolean checked) {
-			final int checkedCount = getListView().getCheckedItemCount();
-			switch (checkedCount) {
-			case 0:
-				mode.setSubtitle(null);
-				break;
-			case 1:
-				mode.setSubtitle(R.string.actionModeSubtitle1);
-				break;
-			default:
-				mode.setSubtitle("" + checkedCount
-						+ getString(R.string.actionModeSubtitle2));
-				break;
-			}
-		}
+        private void toggleCheckedItems() {
+            ListView listView = getListView();
+            for (int i = 0; i < listView.getCount(); ++i) {
+                listView.setItemChecked(i, !listView.isItemChecked(i));
+            }
+        }
 
-		private void toggleCheckedItems() {
-			ListView listView = getListView();
-			for (int i = 0; i < listView.getCount(); ++i) {
-				listView.setItemChecked(i, !listView.isItemChecked(i));
-			}
-		}
+        private void setCheckedAll() {
+            ListView listView = getListView();
+            for (int i = 0; i < listView.getCount(); ++i) {
+                listView.setItemChecked(i, true);
+            }
+        }
 
-		private void setCheckedAll() {
-			ListView listView = getListView();
-			for (int i = 0; i < listView.getCount(); ++i) {
-				listView.setItemChecked(i, true);
-			}
-		}
+        private void markCheckedItemsForDeletion() {
+            ContentValues newValues = new ContentValues();
+            newValues.put(DBConsts.Columns.SYNC_STATUS,
+                    DBConsts.SYNC_STATUS.REMOVE.name());
 
-		private void markCheckedItemsForDeletion() {
-			ContentValues newValues = new ContentValues();
-			newValues.put(EmployeeContentProvider.SYNC_STATUS,
-					DBConsts.SYNC_STATUS.REMOVE.name());
+            long[] ids = getListView().getCheckedItemIds();
+            String[] strIds = new String[ids.length];
+            for (int i = 0; i < ids.length; ++i) {
+                strIds[i] = Long.toString(ids[i]);
+            }
+            getActivity().getContentResolver().update(
+                    EmployeeContentProvider.CONTENT_URI_EMPLOYEE,
+                    newValues,
+                    DBConsts._ID + " in ("
+                            + buildPlaceholders(ids.length) + ")", strIds);
+        }
 
-			long[] ids = getListView().getCheckedItemIds();
-			String[] strIds = new String[ids.length];
-			for (int i = 0; i < ids.length; ++i) {
-				strIds[i] = Long.toString(ids[i]);
-			}
-			getActivity().getContentResolver().update(
-					EmployeeContentProvider.CONTENT_URI,
-					newValues,
-					EmployeeContentProvider._ID + " in ("
-							+ buildPlaceholders(ids.length) + ")", strIds);
-		}
+        private String buildPlaceholders(int length) {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < length; ++i) {
+                builder.append("?").append(",");
+            }
+            builder.deleteCharAt(builder.length() - 1);
+            return builder.toString();
+        }
 
-		private String buildPlaceholders(int length) {
-			StringBuilder builder = new StringBuilder();
-			for (int i = 0; i < length; ++i) {
-				builder.append("?").append(",");
-			}
-			builder.deleteCharAt(builder.length() - 1);
-			return builder.toString();
-		}
-
-	}
-
-	/**
-	 * Helper class to force {@link SimpleCursorAdapter} show merged
-	 * {@link Employee} name as FirstName + SecondName single value
-	 * 
-	 * @author akaverin
-	 * 
-	 */
-	private static final class NameBinder implements ViewBinder {
-		public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-			if (android.R.id.text1 == view.getId()) {
-				String result = cursor.getString(cursor
-						.getColumnIndex(EmployeeContentProvider.FIRST_NAME))
-						+ " " + cursor.getString(columnIndex);
-				((TextView) view).setText(result);
-				return true;
-			}
-			return false;
-		}
-	}
+    }
 
 }
