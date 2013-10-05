@@ -12,8 +12,9 @@
     <string name="server_ip_summary">Server to be used by application</string>
     <string name="submit_label">Submit</string>
     <string name="second_name_label">Second Name</string>
-    <string name="first_name_label">First 
-Name</string>
+    <string name="first_name_label">First
+        Name
+    </string>
     <string name="project_label">Project</string>
     <string name="menuItemSave">Save Item</string>
     <string name="invalid_fname_error">Please, provide first name</string>
@@ -24,5 +25,7 @@ Name</string>
     <string name="actionModeTitle">Select Items</string>
     <string name="actionModeSubtitle1">One item selected</string>
     <string name="actionModeSubtitle2">" items selected"</string>
-    <string name="success_save_toast">Employee saved in local cache. Changes will be uploaded during manual refresh.</string>
+    <string name="success_save_toast">Employee saved in local cache. Changes will be uploaded during manual refresh.
+    </string>
+    <string name="authenticator_label">UASpring</string>
 </resources>
