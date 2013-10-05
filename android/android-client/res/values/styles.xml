@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    
+
     <style name="text_fields">
-        <item name="android:layout_marginLeft">10dp</item>
+        <!--<item name="android:layout_marginLeft">10dp</item> -->
+        <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
+        <item name="android:paddingLeft">?android:attr/listPreferredItemPaddingLeft</item>
+        <item name="android:paddingTop">10dp</item>
     </style>
-    
+
+    <style name="edit_fields">
+        <item name="android:ems">10</item>
+        <item name="android:inputType">textPersonName</item>
+        <item name="android:layout_marginLeft">?android:attr/listPreferredItemPaddingLeft</item>
+        <item name="android:layout_marginRight">?android:attr/listPreferredItemPaddingRight</item>
+    </style>
+
 </resources>
