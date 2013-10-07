@@ -25,10 +25,10 @@ import static ua.com.springbyexample.dao.provider.EmployeeContentProvider.CONTEN
  */
 public class EditFragment extends Fragment {
 
-    EditText firstNameEdit;
-    EditText secondNameEdit;
-    EditText projectEdit;
-    ModeStrategy currentMode;
+    private EditText firstNameEdit;
+    private EditText secondNameEdit;
+    private EditText projectEdit;
+    private ModeStrategy currentMode;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

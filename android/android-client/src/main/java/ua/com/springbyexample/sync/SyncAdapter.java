@@ -24,11 +24,11 @@ import static ua.com.springbyexample.dao.provider.EmployeeContentProvider.CONTEN
  * Date: 10/5/13
  * Time: 7:13 PM
  */
-public class SyncAdapter extends AbstractThreadedSyncAdapter {
+class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     private static final String TAG = Tags.getTag(SyncAdapter.class);
-    private RestProcessor processor;
-    private ContentResolver contentResolver;
+    private final RestProcessor processor;
+    private final ContentResolver contentResolver;
 
     public SyncAdapter(Context context, boolean autoInitialize) {
         this(context, autoInitialize, false);

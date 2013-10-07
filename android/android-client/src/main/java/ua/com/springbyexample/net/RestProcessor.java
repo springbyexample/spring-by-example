@@ -17,7 +17,7 @@ import java.util.List;
 
 public final class RestProcessor {
 
-    public static final String DEFAULT_SERVER_IP = "127.0.0.1";
+    private static final String DEFAULT_SERVER_IP = "127.0.0.1";
     private final Context context;
     private final RestTemplate restTemplate;
 

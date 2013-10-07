@@ -10,7 +10,6 @@
     <string name="key_server_ip">key_server_ip</string>
     <string name="server_ip_title">Server IP</string>
     <string name="server_ip_summary">Server to be used by application</string>
-    <string name="submit_label">Submit</string>
     <string name="second_name_label">Second Name</string>
     <string name="first_name_label">First
         Name

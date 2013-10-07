@@ -16,7 +16,6 @@ public class EmployeeContentProviderTest extends
 
     public EmployeeContentProviderTest() {
         super(EmployeeContentProvider.class, EmployeeContentProvider.AUTHORITY);
-        // TODO Auto-generated constructor stub
     }
 
     @Suppress
@@ -34,14 +33,6 @@ public class EmployeeContentProviderTest extends
         Cursor cursor = getMockContentResolver().query(
                 CONTENT_URI_EMPLOYEE, null, null, null, null);
         assertEquals(employees.size(), cursor.getCount());
-
-        // getMockContentResolver().insert(getProvider().CONTENT_URI, values)
-    }
-
-    // TODO: fix issue with forbidden getAssets method in MockContext
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
     }
 
 }
