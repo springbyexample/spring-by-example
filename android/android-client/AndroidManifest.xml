@@ -10,6 +10,14 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <!-- Accounts permissions -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+
+    <!-- SyncAdapter permissions -->
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+
     <application
             android:name=".SpringApplication"
             android:icon="@drawable/ic_stat_spring_logo"
@@ -27,15 +35,14 @@
         <activity android:name=".activity.SettingsActivity"/>
         <activity android:name=".activity.EditActivity"/>
 
-        <service
-                android:name="ua.com.springbyexample.net.SyncService"
-                android:exported="false"/>
-
         <provider
                 android:name=".dao.provider.EmployeeContentProvider"
                 android:authorities="ua.com.springbyexample.dao.provider.employeecontentprovider"
-                android:exported="false"/>
+                android:exported="false"
+                android:syncable="true"
+                android:label="Employee data"/>
 
+        <!--suppress AndroidLintExportedService -->
         <service
                 android:name=".account.AuthenticationService">
             <intent-filter>
@@ -45,6 +52,19 @@
             <meta-data
                     android:name="android.accounts.AccountAuthenticator"
                     android:resource="@xml/authenticator"/>
+        </service>
+
+        <!--suppress AndroidLintExportedService -->
+        <service
+                android:name=".sync.SyncService"
+                android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+
+            <meta-data android:name="android.content.SyncAdapter"
+                       android:resource="@xml/syncadapter"/>
         </service>
 
     </application>
