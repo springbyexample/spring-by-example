@@ -96,10 +96,9 @@ public class MainListFragment extends ListFragment implements
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Log.i("onCreateLoader");
-        CursorLoader loader = new CursorLoader(getActivity(),
+        return new CursorLoader(getActivity(),
                 CONTENT_URI_EMPLOYEE, null, SYNC_STATUS + " != ?",
                 new String[]{DBConsts.SYNC_STATUS.REMOVE.name()}, null);
-        return loader;
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
@@ -112,7 +111,7 @@ public class MainListFragment extends ListFragment implements
     }
 
     private void onRefresh() {
-        application.getSyncManager().startSync();
+        application.requestForcedSync();
     }
 
     private void startActivity(Class<? extends Activity> activityToStart) {

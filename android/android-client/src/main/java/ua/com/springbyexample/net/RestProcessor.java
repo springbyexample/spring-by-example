@@ -3,7 +3,6 @@ package ua.com.springbyexample.net;
 import android.content.Context;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import de.akquinet.android.androlog.Log;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -13,10 +12,12 @@ import ua.com.springbyexample.R;
 import ua.com.springbyexample.dao.model.Employee;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class RestProcessor {
 
+    public static final String DEFAULT_SERVER_IP = "127.0.0.1";
     private final Context context;
     private final RestTemplate restTemplate;
 
@@ -25,10 +26,7 @@ public final class RestProcessor {
         restTemplate = new RestTemplate(true);
     }
 
-    // TODO: add RestTemplate and specific URL processing
-
     public void post(List<Employee> employees) {
-        Employee[] employeeArray = employees.toArray(new Employee[]{});
 
         HttpHeaders headers = new HttpHeaders();
 
@@ -36,7 +34,11 @@ public final class RestProcessor {
         acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
         headers.setAccept(acceptableMediaTypes);
         headers.setContentType(MediaType.APPLICATION_JSON);
+        //to solve issue: http://stackoverflow.com/questions/13182519/spring-rest-template-usage-causes-eofexception
+        headers.set("Connection", "Close");
 
+        //TODO: do we need an array here?
+        Employee[] employeeArray = employees.toArray(new Employee[employees.size()]);
         HttpEntity<Employee[]> requestEntity = new HttpEntity<Employee[]>(
                 employeeArray, headers);
 
@@ -44,36 +46,23 @@ public final class RestProcessor {
     }
 
     public List<Employee> fetchAll() {
-        RestTemplate restTemplate = new RestTemplate(true);
-
         Employee[] employees = restTemplate.getForObject(getServerUrl(),
                 Employee[].class);
         ArrayList<Employee> list = new ArrayList<Employee>(employees.length);
-        for (Employee employee : employees) {
-            list.add(employee);
-        }
+        Collections.addAll(list, employees);
         return list;
     }
 
-    public void delete(List<Employee> employees) {
-
-        RestTemplate restTemplate = new RestTemplate(true);
+    public void delete(Employee employee) {
         Uri baseUri = Uri.parse(getServerUrl());
-
-        for (Employee employee : employees) {
-            Uri deleteItemUri = Uri.withAppendedPath(baseUri, employee.getId()
-                    .toString());
-            restTemplate.delete(deleteItemUri.toString());
-        }
+        Uri deleteItemUri = Uri.withAppendedPath(baseUri, employee.getId().toString());
+        restTemplate.delete(deleteItemUri.toString());
     }
 
     private String getServerUrl() {
         String ip = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(context.getString(R.string.key_server_ip),
-                        "127.0.0.1");
-        String url = "http://" + ip + ":8080" + RestConsts.EMPLOYEE_ROOT_URL;
-        Log.i("Server URL: " + url);
-        return url;
+                .getString(context.getString(R.string.key_server_ip), DEFAULT_SERVER_IP);
+        return "http://" + ip + ":8080" + RestConsts.EMPLOYEE_ROOT_URL;
     }
 
     private String getBulkServerUrl() {

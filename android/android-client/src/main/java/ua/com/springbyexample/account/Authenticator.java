@@ -26,7 +26,10 @@ import android.os.Bundle;
  * This class is an implementation of AbstractAccountAuthenticator for
  * authenticating accounts.
  */
-class Authenticator extends AbstractAccountAuthenticator {
+public class Authenticator extends AbstractAccountAuthenticator {
+
+    public static final String ACCOUNT_TYPE = "ua.com.springbyexample.android.account";
+    public static final String ACCOUNT_NAME = "Application Account";
 
     public Authenticator(Context context) {
         super(context);

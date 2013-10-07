@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<sync-adapter xmlns:android="http://schemas.android.com/apk/res/android"
+              android:accountType="ua.com.springbyexample.android.account"
+              android:allowParallelSyncs="false"
+              android:contentAuthority="ua.com.springbyexample.dao.provider.employeecontentprovider"
+              android:isAlwaysSyncable="true"
+              android:supportsUploading="true"
+              android:userVisible="true"
+        />

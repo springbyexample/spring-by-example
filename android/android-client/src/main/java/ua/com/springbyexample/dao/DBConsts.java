@@ -12,6 +12,10 @@ public interface DBConsts extends BaseColumns {
         String EMPLOYEE = "employee";
     }
 
+    interface Params {
+        String NO_SYNC = "no_sync";
+    }
+
     interface Columns {
         public static final String _ID = "_id";
         public static final String ID = "id";

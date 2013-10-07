@@ -1,8 +1,9 @@
 package ua.com.springbyexample.dao;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import ua.com.springbyexample.dao.model.Employee;
 import ua.com.springbyexample.dao.provider.EmployeeContentProvider;
 
@@ -21,18 +22,18 @@ import static ua.com.springbyexample.dao.provider.EmployeeContentProvider.CONTEN
  */
 public class EmployeeDAO {
 
-    public static void save(Context context, List<Employee> employees) {
+    public static void save(ContentResolver contentResolver, List<Employee> employees) {
 
         ContentValues[] bulkValues = new ContentValues[employees.size()];
         for (int i = 0; i < employees.size(); ++i) {
             Employee employee = employees.get(i);
             bulkValues[i] = employeeToValues(employee);
             // set default status...
-            bulkValues[i].put(SYNC_STATUS,
-                    DBConsts.SYNC_STATUS.NOOP.name());
+            bulkValues[i].put(SYNC_STATUS, DBConsts.SYNC_STATUS.NOOP.name());
         }
-
-        context.getContentResolver().bulkInsert(CONTENT_URI_EMPLOYEE, bulkValues);
+        Uri uri = CONTENT_URI_EMPLOYEE.buildUpon().appendQueryParameter(DBConsts.Params.NO_SYNC,
+                Boolean.TRUE.toString()).build();
+        contentResolver.bulkInsert(uri, bulkValues);
     }
 
     public static List<Employee> load(Cursor cursor) {
