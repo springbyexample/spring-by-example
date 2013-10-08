@@ -7,6 +7,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 import ua.com.springbyexample.R;
 import ua.com.springbyexample.dao.model.Employee;
@@ -24,6 +25,8 @@ public final class RestProcessor {
     public RestProcessor(Context context) {
         this.context = context;
         restTemplate = new RestTemplate(true);
+        //to solve issue: http://stackoverflow.com/questions/13182519/spring-rest-template-usage-causes-eofexception
+        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
     }
 
     public void post(List<Employee> employees) {
@@ -34,8 +37,6 @@ public final class RestProcessor {
         acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
         headers.setAccept(acceptableMediaTypes);
         headers.setContentType(MediaType.APPLICATION_JSON);
-        //to solve issue: http://stackoverflow.com/questions/13182519/spring-rest-template-usage-causes-eofexception
-        headers.set("Connection", "Close");
 
         //TODO: do we need an array here?
         Employee[] employeeArray = employees.toArray(new Employee[employees.size()]);

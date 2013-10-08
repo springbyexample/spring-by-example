@@ -24,7 +24,8 @@
     <string name="actionModeTitle">Select Items</string>
     <string name="actionModeSubtitle1">One item selected</string>
     <string name="actionModeSubtitle2">" items selected"</string>
-    <string name="success_save_toast">Employee saved in local cache. Changes will be uploaded during manual refresh.
+    <string name="success_save_toast">Employee saved in local cache. Changes will be uploaded automatically or via
+        manual refresh.
     </string>
     <string name="authenticator_label">UASpring</string>
 </resources>

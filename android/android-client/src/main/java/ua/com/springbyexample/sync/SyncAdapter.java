@@ -59,7 +59,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
             Log.i(TAG, "SpringByExample: Sync finished successfully!");
 
         } catch (RestClientException e) {
-            Log.e(TAG, "Exception during sending request", e);
+            Log.w(TAG, "Exception during sending request", e);
         }
     }
 

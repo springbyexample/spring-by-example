@@ -54,7 +54,7 @@ public class SpringApplication extends Application {
         //usually it will contain real user info, like login/pass
         accountManager.addAccountExplicitly(appAccount, null, null);
 
-        //Enable AutoSync, important for auto-upload
+        //Enable AutoSync
         ContentResolver.setSyncAutomatically(appAccount, EmployeeContentProvider.AUTHORITY, true);
     }
 
