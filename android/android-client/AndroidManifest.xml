@@ -42,9 +42,9 @@
                 android:syncable="true"
                 android:label="Employee data"/>
 
-        <!--suppress AndroidLintExportedService -->
         <service
-                android:name=".account.AuthenticationService">
+                android:name=".account.AuthenticationService"
+                android:exported="false">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>
             </intent-filter>
@@ -54,10 +54,9 @@
                     android:resource="@xml/authenticator"/>
         </service>
 
-        <!--suppress AndroidLintExportedService -->
         <service
                 android:name=".sync.SyncService"
-                android:exported="true">
+                android:exported="false">
 
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>

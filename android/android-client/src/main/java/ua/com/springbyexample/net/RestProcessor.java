@@ -3,6 +3,7 @@ package ua.com.springbyexample.net;
 import android.content.Context;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -63,6 +64,9 @@ public final class RestProcessor {
     private String getServerUrl() {
         String ip = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(context.getString(R.string.key_server_ip), DEFAULT_SERVER_IP);
+        if (TextUtils.isEmpty(ip)) {
+            ip = DEFAULT_SERVER_IP;
+        }
         return "http://" + ip + ":8080" + RestConsts.EMPLOYEE_ROOT_URL;
     }
 

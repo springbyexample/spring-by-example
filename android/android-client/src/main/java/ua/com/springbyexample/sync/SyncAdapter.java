@@ -59,6 +59,8 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
             Log.i(TAG, "SpringByExample: Sync finished successfully!");
 
         } catch (RestClientException e) {
+            //Optionally, we can add System notification regarding sync issue with retry option.
+            ++syncResult.stats.numIoExceptions;
             Log.w(TAG, "Exception during sending request", e);
         }
     }
