@@ -30,13 +30,10 @@ public class StateBean implements ApplicationContextAware {
 	@ManagedOperation(description = "Shutdown deamon gracefully")
 	public void shutdown() {
 		final ExecutorService executor = Executors.newSingleThreadExecutor();
-		executor.submit(new Runnable() {
-			@Override
-			public void run() {
-				((ConfigurableApplicationContext) applicationContext).close();
-				executor.shutdown();
-			}
-		});
+		executor.submit(() -> {
+            ((ConfigurableApplicationContext) applicationContext).close();
+            executor.shutdown();
+        });
 	}
 
 	@Override

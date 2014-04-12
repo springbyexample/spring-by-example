@@ -11,9 +11,10 @@
 
 
 	<properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>3.1.2.RELEASE</spring.version>
-		<java.version>1.6</java.version>
+		<spring.version>4.0.3.RELEASE</spring.version>
 		<sl4j.version>1.6.6</sl4j.version>
 		<logback.version>1.0.6</logback.version>
 		<activemq.version>5.6.0</activemq.version>
@@ -123,23 +124,10 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.10</version>
+			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
 
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>
