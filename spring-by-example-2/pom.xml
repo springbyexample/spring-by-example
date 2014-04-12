@@ -9,11 +9,12 @@
 	<name>spring-by-example-2</name>
 
 	<properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>3.2.1.RELEASE</spring.version>
-		<spring.security.version>3.1.3.RELEASE</spring.security.version>
+		<spring.version>4.0.3.RELEASE</spring.version>
+		<spring.security.version>3.2.3.RELEASE</spring.security.version>
 		<slf4j.version>1.6.6</slf4j.version>
-		<java.version>1.7</java.version>
 		<junit.version>4.11</junit.version>
 		<activemq.version>5.6.0</activemq.version>
 		<logback.version>1.0.6</logback.version>
@@ -28,7 +29,7 @@
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
-            <version>0.8.1</version>
+            <version>0.9.1</version>
         </dependency>
         <dependency>
 			<groupId>javax.validation</groupId>
@@ -40,7 +41,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>4.1.0.Final</version>
+			<version>4.3.0.Final</version>
 			<scope>compile</scope>
 		</dependency>
 
@@ -49,14 +50,14 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>4.1.8.Final</version>
+			<version>4.1.9.Final</version>
 			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>1.3.153</version>
+			<version>1.3.170</version>
 		</dependency>
 
 		<dependency>
@@ -110,13 +111,13 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jms</artifactId>
-			<version>3.1.3.RELEASE</version>
+			<version>3.2.3.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
-			<version>1.2.0.RELEASE</version>
+			<version>1.3.1.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -161,17 +162,17 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>2.1.2</version>
+			<version>2.2.3</version>
 		</dependency>
         <dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>2.1.2</version>
+			<version>2.2.3</version>
 		</dependency>
         <dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.1.2</version>
+			<version>2.2.3</version>
 		</dependency>
 
 		<!-- JMS dependencies -->
@@ -283,6 +284,13 @@
 			<scope>test</scope>
 		</dependency>
 
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-servlet_3.0_spec</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+
 		<!-- logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -357,34 +365,11 @@
 		<finalName>spring-by-example-2</finalName>
 		<plugins>
 
-			<!-- Facilitates downloading source and javadoc in Eclipse -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.8</version>
-				<configuration>
-					<wtpversion>2.0</wtpversion>
-					<downloadSources>true</downloadSources>
-					<downloadJavadocs>true</downloadJavadocs>
-				</configuration>
-			</plugin>
-
-			<!-- Ensures we are compiling at 1.6 level -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-			</plugin>
-
 			<!-- Jetty maven plugin -->
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>8.1.0.RC5</version>
+				<version>8.1.13.v20130916</version>
 			</plugin>
 
 			<!-- Tomcat plugin for embedded tomcat -->

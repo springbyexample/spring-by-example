@@ -1,7 +1,7 @@
 package ua.com.springbyexample.service;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import ua.com.springbyexample.domain.Employee;
 import ua.com.springbyexample.domain.Position;
@@ -18,13 +18,10 @@ public class AnotherEmployeeServiceImpl implements  AnotherEmployeeService {
 
 	@Override
 	public Set<Employee> getEmployeeListByPosition(Position position) {
-		Set<Employee> result  = new HashSet<Employee>();
-		for (Employee employee : employeeDS.getEmployees()) {
-			if (employee.getPosition() == position) {
-				result.add(employee);
-			}
-		}
-		return result;
+        return employeeDS.getEmployees().stream()
+                                        .filter(employee -> employee.getPosition() == position)
+//                                        .map(employee -> employee)
+                                        .collect(Collectors.toSet());
 	}
 
 }

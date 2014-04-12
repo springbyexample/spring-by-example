@@ -11,9 +11,10 @@
 
 
 	<properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>3.2.1.RELEASE</spring.version>
-		<java.version>1.6</java.version>
+		<spring.version>4.0.3.RELEASE</spring.version>
 	</properties>
 
 	<repositories>
@@ -88,13 +89,13 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<version>1.7.1</version>
+			<version>1.7.2</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
-			<version>1.7.1</version>
+			<version>1.7.2</version>
 		</dependency>
 
 		<dependency>
@@ -107,7 +108,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>13.0</version>
+			<version>15.0</version>
 		</dependency>
 
 		<!-- Test Dependencies -->
@@ -134,18 +135,5 @@
 		</dependency>
 
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>

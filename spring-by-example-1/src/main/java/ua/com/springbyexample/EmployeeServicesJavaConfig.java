@@ -25,9 +25,7 @@ public class EmployeeServicesJavaConfig {
 
 	@Bean
 	public EmployeeDS employeeDS() {
-		return new EmployeeDS() {
-			@Override
-			public Set<Employee> getEmployees() {
+		return () -> {
 				Set<Employee> result = new HashSet<Employee>();
 				Employee me = new Employee();
 				me.setFirstName(environment.getProperty("me.firstName"));
@@ -40,7 +38,6 @@ public class EmployeeServicesJavaConfig {
 				eugene.setPosition(Position.valueOf(environment.getProperty("eugene.position")));
 				result.add(eugene);
 				return result;
-			}
 		};
 	}
 
