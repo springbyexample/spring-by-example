@@ -1,9 +1,7 @@
 .gitignore
 .metadata/
 Servers/
-<<<<<<< HEAD
 .idea
-=======
 
 #Eclipse related
 bin/
@@ -14,4 +12,8 @@ gen/
 
 #Maven related
 target/
->>>>>>> 588f81b44552662c16129d0674458f1080e167c4
+
+#Gradle
+
+.gradle
+build

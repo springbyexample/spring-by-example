@@ -14,11 +14,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.0.3.RELEASE</spring.version>
 		<spring.security.version>3.2.3.RELEASE</spring.security.version>
-		<slf4j.version>1.6.6</slf4j.version>
+		<slf4j.version>1.7.7</slf4j.version>
 		<junit.version>4.11</junit.version>
-		<activemq.version>5.6.0</activemq.version>
-		<logback.version>1.0.6</logback.version>
-	</properties>
+		<activemq.version>5.7.0</activemq.version>
+		<logback.version>1.1.2</logback.version>
+        <jackson.version>2.3.3</jackson.version>
+    </properties>
 
 	<dependencies>
 
@@ -27,22 +28,15 @@
 		<!-- Bean Validation Dependencies -->
 
         <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <version>0.9.1</version>
-        </dependency>
-        <dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>1.0.0.GA</version>
-			<scope>compile</scope>
+			<version>1.1.0.Final</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>4.3.0.Final</version>
-			<scope>compile</scope>
+			<version>5.0.1.Final</version>
 		</dependency>
 
 		<!-- JPA Persistence Dependencies -->
@@ -50,21 +44,19 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>4.1.9.Final</version>
-			<scope>compile</scope>
+			<version>4.3.5.Final</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>1.3.170</version>
+			<version>1.4.177</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>1.0.1.Final</version>
-			<scope>compile</scope>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>1.0.0.Final</version>
 		</dependency>
 
 		<!-- Spring Dependencies -->
@@ -89,15 +81,12 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 			<version>${spring.version}</version>
-			<type>jar</type>
-			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
-			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
 
@@ -111,13 +100,13 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jms</artifactId>
-			<version>3.2.3.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
-			<version>1.3.1.RELEASE</version>
+			<version>1.5.1.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -147,7 +136,7 @@
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib-nodep</artifactId>
-			<version>2.2.2</version>
+			<version>3.1</version>
 		</dependency>
 
 		<!-- View Dependencies -->
@@ -162,17 +151,17 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>2.2.3</version>
+			<version>${jackson.version}</version>
 		</dependency>
         <dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>2.2.3</version>
+			<version>${jackson.version}</version>
 		</dependency>
         <dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.2.3</version>
+			<version>${jackson.version}</version>
 		</dependency>
 
 		<!-- JMS dependencies -->
@@ -252,17 +241,22 @@
 		<dependency>
 			<groupId>org.apache.xbean</groupId>
 			<artifactId>xbean-spring</artifactId>
-			<version>3.12</version>
+			<version>3.17</version>
 		</dependency>
+
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-servlet_3.0_spec</artifactId>
+            <version>1.0</version>
+        </dependency>
 
 		<!-- Test Dependencies -->
-		<dependency>
-			<groupId>hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>1.8.0.10</version>
-			<scope>test</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -285,9 +279,9 @@
 		</dependency>
 
         <dependency>
-            <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-servlet_3.0_spec</artifactId>
-            <version>1.0</version>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>0.9.1</version>
             <scope>test</scope>
         </dependency>
 
@@ -308,22 +302,6 @@
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
 			<scope>runtime</scope>
-		</dependency>
-
-
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>
@@ -361,42 +339,4 @@
 
 	</repositories>
 
-	<build>
-		<finalName>spring-by-example-2</finalName>
-		<plugins>
-
-			<!-- Jetty maven plugin -->
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>8.1.13.v20130916</version>
-			</plugin>
-
-			<!-- Tomcat plugin for embedded tomcat -->
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.0</version>
-				<executions>
-					<execution>
-						<id>tomcat-run</id>
-						<goals>
-							<goal>exec-war-only</goal>
-						</goals>
-						<phase>package</phase>
-						<configuration>
-							<path>/</path>
-							<!-- optional only if you want to use a preconfigured server.xml file -->
-							<serverXml>src/main/webapp/META-INF/server.xml</serverXml>
-							<!-- optional values which can be configurable -->
-							<!-- <attachArtifactClassifier>default value is exec-war but you can 
-								customize</attachArtifactClassifier> -->
-							<!-- <attachArtifactClassifierType>default value is jar</attachArtifactClassifierType> -->
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-		</plugins>
-	</build>
 </project>
